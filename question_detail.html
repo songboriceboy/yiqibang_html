@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>vs2010怎么打开vs2013项目（vs2012怎么打开vs2013项目）·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <script src="/Scripts/kindeditor-v4.1/plugins/prettifier/prettify.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            //需要远程求助时默认为普通textarea
+            if ($("[zyf-quick-comment]").length > 0) {
+                showTextArea();
+            }
+
+            //感谢总结
+            $("[zyf-summary-thank]").click(function(event){
+                event.preventDefault();
+                if (isVisitor()) {
+                    showRemind('<span class="glyphicon glyphicon-warning-sign text-warning"></span> 只有登录用户才能表示感谢。' + needLogonRemind());
+                    return;
+                }
+                var $this = $(this);
+                $this.hide();
+                $.ajax({
+                    url: $this.attr("href"),
+                    method: "GET",
+                    cache: false,
+                    success: function (data) {
+                        if (data >= 0) {
+                            showRemind('<span class="glyphicon glyphicon-ok text-success"></span> 感谢你的感谢！ (＾＿－)'+
+                                '<p>本次操作消耗你的<span class="glyphicon glyphicon-usd"></span> <a href="/FAQ/Credit#ballot" target="_blank">打赏币</a> 1枚，你还有剩余打赏币'+data+'枚。</p>');
+                            var $thanksCount = $this.children("[zyf-summary-thanks-count]");
+                            var origin = parseInt($thanksCount.text());
+                            $thanksCount.text(origin + 1);
+                        }else {
+                            //TODO: 打赏币不足，还可以用自己的时间币表示感谢？
+                            showRemind('<span class="glyphicon glyphicon-warning-sign text-warning"></span> 你的 <a href="/FAQ/Credit#ballot" target="_blank">打赏币</a> 不足，下次登录时再来吧。');
+                        }
+                    },
+                    complete: function () {
+                        $this.show();
+                    },
+                    error: JqueryAjaxError
+                });
+            })
+
+            //分别显示：好心人/求助人
+            $("[zyf-comment-author-role]").each(function(){
+                var commentAuthorId = $(this).attr("zyf-comment-author-id");
+
+                var problemAuthorId = 1084;
+                //Note: 只能用“==”，不要用“===”，否则类型比较出问题
+                if (commentAuthorId == problemAuthorId) {
+                    $(this).text("求助人：");
+                }else {
+                    $(this).text("好心人：");
+                }
+
+                var bestRewardId = $("[zyf-problem-best-reward-author-id]").val();
+                if (commentAuthorId == bestRewardId) {
+                    $(this).before('<span class="glyphicon glyphicon-ok text-success" data-toggle="tooltip" title="被酬谢人"></span> ');
+                }
+            })
+
+            //快捷回复
+            $("[zyf-quick-comment]").change(function(){
+                $("[zyf-new-comment]").val($(this).val());
+            })
+
+            //高亮代码
+            prettyPrint();
+
+            $("[zyf-summary-show] img").addClass("img-responsive");
+
+            $("[zyf-problem-rate-indicator]").removeClass("hide");
+
+            //显示撤销链接
+            var problemUserId = 1084;
+            if (isCurrent(problemUserId)) {
+                $("[zyf-problem-cancel]").removeClass("hide");
+            }
+
+            //酬谢功能
+            //求助人Id
+            var seeker = $("[zyf-problem-author]").data("author-id");
+            //如果当前用户是求助人，且问题仍然在等待帮助
+            if (isCurrent(seeker) && $("[zyf-wait-help]").length > 0) {
+                //每一个“酬谢”按钮
+                $("[zyf-reward]").each(function () {
+                    //留言作者的Id
+                    var authorId = $(this).attr("zyf-reward");
+                    //如果留言作者不是求助人
+                    if (authorId != seeker) {
+                        $(this).removeClass("hide");
+                    }
+                    $(this).click(function () {
+                        $("[zyf-rate-modal]").modal("show");
+                        $("[zyf-rate-comment-id]").val($(this).attr("zyf-comment-id"));
+                    })
+                });
+            }
+
+            //修改酬谢
+            //如果当前用户是求助人，且问题已经被评价
+            if (isCurrent(seeker) && $("[zyf-problem-best-reward-author-id]").val() !== "") {
+                $("[zyf-problem-rate-edit]")
+                    .removeClass("hide")
+                    .click(function () {
+                        $("[zyf-edit-modal]").modal("show");
+                        //$("[zyf-rate-comment-id]").val($(this).attr("zyf-comment-id"));
+                    });
+            }
+
+        })
+
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fProblem%2f170"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">
+
+                好<span class="glyphicon glyphicon-heart descend-4px heart"></span>人帮帮忙
+
+                <small style="" class="visible-xs-inline visible-sm-inline">
+                    <a zyf-show-widget>
+
+                        <span class="glyphicon glyphicon-fullscreen descend-2px"></span> 更多
+
+                    </a>
+                </small>
+            </h2>
+
+            <div>
+                <a href="/Problem/Cancel?id=170" class="btn btn-default hide pull-right" style="margin-left:20px;" zyf-problem-cancel>
+                    <span class="glyphicon glyphicon-remove descend-2px"></span> 撤销
+                </a>
+                <div zyf-problem-single>
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 13点50分</small>
+
+                    <a href="/Problem/Edit/170" class="hide btn" zyf-problem-edit zyf-problem-author-id="1084">
+                        <span class="glyphicon glyphicon-edit descend-2px"></span> 修改
+                    </a>
+                    <span class="pull-right">
+        <span data-author-id="1084" zyf-problem-author>
+            <label>
+                <span class="glyphicon glyphicon-user"></span>
+                <span class="visible-sm-inline visible-md-inline visible-lg-inline">求助：</span>
+            </label>
+            <a href="/User/1084" zyf-show-contact="1084">toone888</a>
+
+        </span>
+    </span>
+                    <div style="font-size:24px;word-break:break-all;">
+                        <span class="glyphicon glyphicon-hourglass descend-4px" data-toggle="tooltip" title="等待中" zyf-wait-help></span>
+                        <a href="/Problem/170" target="_blank">vs2010怎么打开vs2013项目（vs2012怎么打开vs2013项目）</a>
+                    </div>
+                    <div style="margin-top:10px; margin-bottom:10px; word-break:break-all;" class="clearfix">
+                        <div class="text-primary pull-right text-center remote-icon yellow-highlight" title="该求助需要远程协助" data-toggle="tooltip">
+                            <span class="glyphicon glyphicon-transfer descend-2px"></span><br />
+                            <small>远程</small>
+                        </div>
+                        求助            <a href="/Problem/AdminEdit?id=170" class="hide" zyf-problem-edit-admin style="margin-left:15px;">
+                        <span class="glyphicon glyphicon-edit descend-2px"></span> 修改
+                    </a>
+                    </div>
+                    <p zyf-problem-keyword style="clear:both;">
+                        <span class="glyphicon glyphicon-tags descend-4px" style="margin-right:10px;"></span>
+                        <span zyf-keyword="28" title="已使用 28 次" data-toggle="tooltip" class="badge badge-has-used" style="margin-right:5px;">
+                        编程开发语言
+                    </span>
+                        <span zyf-keyword="14" title="已使用 14 次" data-toggle="tooltip" class="badge badge-has-used" style="margin-right:5px;">
+                        C#
+                    </span>
+                        <a href="" class="hide" zyf-keyword-update="170">
+                            <span class="glyphicon glyphicon-edit descend-2px"></span> 修改
+                        </a>
+                    </p>
+                    <div class="status">
+            <span>
+                <label>
+                    <span class="glyphicon glyphicon-time credit"></span>
+                    <span class="visible-sm-inline visible-md-inline visible-lg-inline">悬赏：</span>
+                </label>
+                <a href="" target="_blank">10</a>
+            </span>
+                        <span>
+                <label>
+                    <span class="glyphicon glyphicon-heart" style="color:red;"></span>
+                    <span class="visible-sm-inline visible-md-inline visible-lg-inline">应答：</span>
+                </label>
+                <a href="/Problem/170" target="_blank" zyf-comment-count>
+                    2
+                </a>
+            </span>
+                        <span>
+                <label>
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    <span class="visible-sm-inline visible-md-inline visible-lg-inline">总结：</span>
+                </label>
+                <a href="/Problem/170" target="_blank" zyf-comment-count>
+                    0
+                </a>
+            </span>
+                    </div>
+
+                </div>
+                <h3><span class="glyphicon glyphicon-list-alt descend-3px"></span> 问题总结</h3>
+                <div>
+                    <p class="summary-show">
+                        <span class="text-primary">(´･･)ﾉ(._.`)</span><br />
+                        <span class="text-muted">还没有内容呢！等待求助被解决（酬谢/撤销）后，求助人或好心人总结……</span>
+                    </p>
+
+                </div>
+            </div>
+            <a name="new-comment"></a>
+            <div style="clear:both; margin: 20px 0;">
+
+                <div zyf-not-logon class="hide" style="border:2px dashed #eee; border-radius:4px 6px; padding: 10px 20px; clear:both;">
+                    <span class="glyphicon glyphicon-warning-sign" style="color:yellowgreen;"></span>
+                    您还没有登录，不能发布评论。请<a href="/Log/On?prepage=%2fProblem%2f170">登陆</a>或<a href="/Register/Home?prepage=%2fProblem%2f170">注册</a>。
+                </div>
+                <div zyf-logon class="hide">
+                    <h3>
+                        <span class="glyphicon glyphicon-send descend-2px"></span> 应答 <small>（下拉快捷留言）</small>
+                        <div class="pull-right">
+                            <small class="text-info" zyf-kindeditor-remind></small>
+
+                            <a class="btn btn-xs btn-primary" style="margin-right:5px" zyf-toggle-kindeditor>
+                                <span class="glyphicon glyphicon-refresh descend-2px"></span>切换
+                            </a>
+                        </div>
+                    </h3>
+                    <div class="form-group">
+                        <select zyf-quick-comment class="form-control">
+                            <option></option>
+                            <option>抢： 我可以试试……</option>
+                            <option>抢： 这就是我的菜……</option>
+                            <option>抢： 都闪开，让我来……</option>
+                            <option>抢： 时间币归我了……</option>
+                        </select>
+                    </div>
+
+                    <script src="/Scripts/kindeditor-v4.1/kindeditor.js"></script>
+                    <script src="/Scripts/kindeditor-v4.1/lang/zh_CN.js"></script>
+                    <script src="/Scripts/kindeditor.help.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            var validator = $('form').data("validator");
+                            if (validator !== undefined) {
+                                //Note: 验证“隐藏”的控件
+                                validator.settings.ignore = "";
+                            }
+                        })
+                    </script>
+                    <form action="/Problem/170" data-ajax="true" data-ajax-begin="hideButton" data-ajax-complete="showButton" data-ajax-failure="showAjaxError" data-ajax-method="Post" data-ajax-mode="before" data-ajax-success="congratulate" data-ajax-update="#published_comment" id="form0" method="post">    <div zyf-problem-comment-reply-reminder></div>
+                        <input data-val="true" data-val-number="字段 ReplyId 必须是一个数字。" id="NewComment_ReplyId" name="NewComment.ReplyId" type="hidden" value="" zyf-problem-comment-reply-id="" /><span class="field-validation-valid" data-valmsg-for="NewComment.ReplyId" data-valmsg-replace="true"></span>    <div class="form-group">
+        <textarea class="form-control" cols="20" data-val="true" data-val-required="* 正文不能为空" id="NewComment_Content" name="NewComment.Content" placeholder="求助人希望获得直接的远程协助。
+点击求助人链接可查看其联系方式后直接联系。
+这里可直接使用快捷应答，以便于其后获得求助人酬谢的时间币。
+问题解决之后，还可以详细总结，供其他人参考，O(∩_∩)O~" rows="4" zyf-kindeditor="" zyf-new-comment="">
+</textarea>
+                            <input data-val="true" data-val-required="IsRichHtml 字段是必需的。" id="NewComment_IsRichHtml" name="NewComment.IsRichHtml" type="hidden" value="" zyf-isRichHtml="" />
+                            <span class="field-validation-valid" data-valmsg-for="NewComment.Content" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="submit">
+                            <input type="submit" id="submit" class="btn btn-primary loading" value="提交" />
+                            <input type="reset" class="btn btn-default" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <span class="pull-right">
+    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+</span>
+            <div id="published_comment"></div>
+            <a name="comments"></a>
+            <a zyf-problem-comment-anchor data-comment-id="383" name="2"></a>
+            <div zyf-problem-comment class="clearfix comment-container">
+                <div>
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 14点51分</small>
+
+                    <small class="text-primary">--- 第 2 楼 ---</small>
+                </div>
+                <div class="comment-body">
+                    <a class="hide pull-right reward-btn yellow-highlight" zyf-reward="1" zyf-comment-id="383">
+                        <span class="glyphicon glyphicon-check"></span> 酬谢
+                    </a>
+                    10分钟时间币，是不是太少了点~~~~~
+                </div>
+                <div>
+        <span><label zyf-comment-author-role zyf-comment-author-id="1"></label><a href="/User/1" zyf-show-contact="1">叶飞</a>
+</span>
+                    <a href="#new-comment" zyf-problem-comment-reply data-current-comment-id="383" data-current-comment-layer="2"
+                       class="hide" style="margin-left:20px;">
+                        <span class="glyphicon glyphicon-send descend-2px"></span> 回复
+                    </a>
+                </div>
+            </div>
+            <a zyf-problem-comment-anchor data-comment-id="382" name="1"></a>
+            <div zyf-problem-comment class="clearfix comment-container">
+                <div>
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 13点55分</small>
+
+                    <small class="text-primary">--- 第 1 楼 ---</small>
+                </div>
+                <div class="comment-body">
+                    <a class="hide pull-right reward-btn yellow-highlight" zyf-reward="1" zyf-comment-id="382">
+                        <span class="glyphicon glyphicon-check"></span> 酬谢
+                    </a>
+                    抢： 我可以试试……
+                </div>
+                <div>
+        <span><label zyf-comment-author-role zyf-comment-author-id="1"></label><a href="/User/1" zyf-show-contact="1">叶飞</a>
+</span>
+                    <a href="#new-comment" zyf-problem-comment-reply data-current-comment-id="382" data-current-comment-layer="1"
+                       class="hide" style="margin-left:20px;">
+                        <span class="glyphicon glyphicon-send descend-2px"></span> 回复
+                    </a>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" zyf-rate-modal id="contact">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><span class="glyphicon glyphicon-heart" style="color:red"></span> 酬谢好心人</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/Rate/_Do/170" method="post">    <div class="form-group">
+                                <label>满意度：</label>
+                                <select class="form-control" data-val="true" data-val-required="Level 字段是必需的。" id="Level" name="Level"><option value="Complain">1星：非常不满意</option>
+                                    <option value="Dissatisfied">2星：不满意</option>
+                                    <option value="Normal">3星：满意</option>
+                                    <option selected="selected" value="Satisfied">4星：很满意</option>
+                                    <option value="Praise">5星：超级超级满意</option>
+                                </select>
+                            </div>
+                                <div class="form-group">
+                                    <label>话说：</label>
+                                    <textarea class="form-control" cols="20" data-val="true" data-val-length="* 用户名的长度不能大于255" data-val-length-max="255" id="Comment" name="Comment" placeholder="给点表扬吧？好心人会看得到的哟！" rows="2">
+</textarea>
+                                    <span class="field-validation-valid" data-valmsg-for="Comment" data-valmsg-replace="true"></span>
+                                </div>
+                                <input type="hidden" name="commentId" zyf-rate-comment-id />
+                                <div class="submit">
+                                    <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                                </div>
+                            </form>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <div class="modal fade" tabindex="-1" role="dialog" zyf-keyword-update-modal>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"><span class="glyphicon glyphicon-edit descend-2px"></span> 修改关键字</h4>
+                        </div>
+                        <div class="modal-body" zyf-keyword-update-modal-body>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
+        </div>
+        <div style="margin-top:55px" class="col-md-4 visible-md visible-lg">
+
+            <div zyf-widget-content  class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-tags descend-4px"></span> 关键字</div>
+                <hr />
+                <div zyf-keyword-widget-content></div>
+                <a href="" class="btn btn-default pull-right" zyf-keyword-widget-another>
+                    <span class="glyphicon glyphicon-random descend-2px"></span>
+                    <span style="margin-left:5px;">换一批</span>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div class="ad-in-widget">
+
+                    <span class="item-1">1</span>
+                    <a href="http://nutzam.com" target="_blank">Nutz-Java程序员的另一个选择</a>
+                </div>
+                <a href="/AdInWidget/Write" target="_blank" class="pull-right text-muted">
+                    <small zyf-ad-in-widget-remind>
+                        <span class="glyphicon glyphicon-tint descend-2px"></span> 广告
+                        <span zyf-ad-in-widget-remind-suffix class="hide">，你也可以发布哟！</span>
+                    </small>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-bell descend-4px"></span> 即时消息</div>
+                <hr />
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点31分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/829" zyf-show-contact="829">码农一号</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/169" target="_blank">android RecyclerView数据源刷新...</a>有<a href="http://17bang.ren/User/1376" target="_blank">vite</a>的新应答：<span class="text-muted">抢： 我可以试试……</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点39分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1175" zyf-show-contact="1175">dybai</a>
+                    </small>
+                    <p style="clear:both;">文章的评论<a href="http://17bang.ren/Article/7" target="_blank">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</a>被标识为<span class="text-success"> <span class="glyphicon glyphicon-flag"></span> 精选</span>，获得 <span class="glyphicon glyphicon-time credit"></span> <a href="http://17bang.ren/FAQ/Credit" target="_blank">时间币</a> 奖励10分钟</p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点38分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+                    </small>
+                    <p style="clear:both;">文章<a href="http://17bang.ren/Article/7" target="_blank">十年之后再看“面向对象”</a>有<a href="http://17bang.ren/User/1175" target="_blank">dybai</a>的新应答：<span class="text-muted">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 15点09分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/883" zyf-show-contact="883">韩慎之</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/141" target="_blank">三个小问题 直接图示。git bash 如图这样子...</a>有<a href="http://17bang.ren/User/1360" target="_blank">zakeyken</a>的新应答：<span class="text-muted">看不到图片，不知道什么情况</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 14点51分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1084" zyf-show-contact="1084">toone888</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/170" target="_blank">vs2010怎么打开vs2013项目（vs2012...</a>有<a href="http://17bang.ren/User/1" target="_blank">叶飞</a>的新应答：<span class="text-muted">10分钟时间币，是不是太少了点~~~~~</span></p>
+                </div>
+                <a href="/Message/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 全部消息</a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-user descend-2px"></span> 新注册用户</div>
+                <hr />
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点19分</small>
+
+                    <div>
+                        <a href="/User/1379" zyf-show-contact="1379">wp90925</a>
+
+                        <span>男，</span>
+                        <span>1999年6月双子座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点14分</small>
+
+                    <div>
+                        <a href="/User/1378" zyf-show-contact="1378">青云</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点41分</small>
+
+                    <div>
+                        <a href="/User/1377" zyf-show-contact="1377">sjt157</a>
+
+                        <span>男，</span>
+                        <span>1994年4月金牛座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点53分</small>
+
+                    <div>
+                        <a href="/User/1376" zyf-show-contact="1376">vite</a>
+
+                        <span></span>
+                        <span></span>
+                        <div style="word-break:break-all;">
+                            <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                            https://github.com/ViTess
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点41分</small>
+
+                    <div>
+                        <a href="/User/1375" zyf-show-contact="1375">TEST-dk</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <a href="/User/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 更多</a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fProblem%2f170">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<style type="text/css">
+    h2 {
+        position: relative;
+    }
+
+    h2 > small {
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+    }
+
+    li {
+        margin-top: 5px;
+    }
+</style>
+
+<link href="/Scripts/kindeditor-v4.1/plugins/prettifier/prettify.css" rel="stylesheet" />
+
+
+</body>
+</html>

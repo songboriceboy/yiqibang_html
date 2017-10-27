@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="“一起帮”注册用户列表……" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>注册用户·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fUser%2fIndex"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <h2 class="page-header">
+        <span class="glyphicon glyphicon-list-alt descend-4px"></span>
+        注册用户
+        <small style="margin-left:20px;">
+        <span class="visible-sm-inline visible-md-inline visible-lg-inline" data-toggle="tooltip" title="24小时内登录">
+            活跃：
+        </span>
+            49 /
+            <span class="visible-sm-inline visible-md-inline visible-lg-inline">全部：</span>
+            1379
+        </small>
+    </h2>
+
+    <div>
+        <div class="row visible-sm visible-md visible-lg text-bold">
+            <div class="col-sm-1">状态</div>
+            <div class="col-sm-2">用户名</div>
+            <div class="col-sm-1">积分</div>
+            <div class="col-sm-4">关注</div>
+            <div class="col-sm-4">自我描述</div>
+        </div>
+        <hr class="thin visible-sm visible-md visible-lg" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月14日 09点19分 &#13; 登录：2017年10月14日 09点19分">
+                <small>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1379" zyf-show-contact="1379">wp90925</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 0
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 28 次" >编程开发语言</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span>男，</span>
+                <span>1999年6月双子座</span>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月14日 09点14分 &#13; 登录：2017年10月14日 09点14分">
+                <small>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1378" zyf-show-contact="1378">青云</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 0
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月11日 08点34分 &#13; 登录：2017年10月14日 07点47分">
+                <small>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1214" zyf-show-contact="1214">fan8050</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 20
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月10日 14点50分 &#13; 登录：2017年10月13日 23点42分">
+                <small>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1166" zyf-show-contact="1166">123</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 32
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 0 次" >好</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span>男，</span>
+                <span>1998年6月双子座</span>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年09月20日 23点49分 &#13; 登录：2017年10月13日 22点15分">
+                <small>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/902" zyf-show-contact="902">fanfuhan</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 20
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 28 次" >编程开发语言</span>
+                <span class="badge" data-toggle="tooltip" title="被使用 2 次" >C++</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span>男，</span>
+                <span>1994年5月金牛座</span>
+                <div style="word-break:break-all;">
+                    <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                    小白…
+                </div>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月13日 21点41分 &#13; 登录：2017年10月13日 21点41分">
+                <small>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1377" zyf-show-contact="1377">sjt157</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 0
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 0 次" >aa</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span>男，</span>
+                <span>1994年4月金牛座</span>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年09月27日 00点16分 &#13; 登录：2017年10月13日 21点26分">
+                <small>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1026" zyf-show-contact="1026">poq</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 0
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 28 次" >编程开发语言</span>
+                <span class="badge" data-toggle="tooltip" title="被使用 4 次" >PHP</span>
+                <span class="badge" data-toggle="tooltip" title="被使用 4 次" >SQL</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span>男，</span>
+                <span>1993年7月狮子座</span>
+                <div style="word-break:break-all;">
+                    <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                    php程序员
+                </div>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月13日 20点53分 &#13; 登录：2017年10月13日 20点53分">
+                <small>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1376" zyf-show-contact="1376">vite</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 20
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 12 次" >JAVA</span>
+                <span class="badge" data-toggle="tooltip" title="被使用 4 次" >Android</span>
+                <span class="badge" data-toggle="tooltip" title="被使用 28 次" >编程开发语言</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span></span>
+                <span></span>
+                <div style="word-break:break-all;">
+                    <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                    https://github.com/ViTess
+                </div>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年10月13日 20点41分 &#13; 登录：2017年10月13日 20点41分">
+                <small>
+                    <span class="glyphicon glyphicon-registration-mark"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/1375" zyf-show-contact="1375">TEST-dk</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 20
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+            <div class="col-xs-12 col-sm-4">
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-2 col-sm-1" data-toggle="tooltip" title="注册：2017年09月02日 13点42分 &#13; 登录：2017年10月13日 20点40分">
+                <small>
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </small>
+            </div>
+            <div class="col-xs-10 col-sm-2">
+                <span class="glyphicon glyphicon-user visible-xs-inline"></span> <a href="/User/835" zyf-show-contact="835">Alan</a>
+
+            </div>
+            <div class="col-xs-12 col-sm-1">
+                <label class="visible-xs-inline">积分：</label> 130
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label class="visible-xs-inline">关注：</label>
+                <span class="badge" data-toggle="tooltip" title="被使用 2 次" >测试</span>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <span></span>
+                <span></span>
+                <div style="word-break:break-all;">
+                    <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                    其实我是一位测试狗……O(∩_∩)O~
+                </div>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+
+
+        <nav>
+            <ul class="pagination">
+                <li class="active"><a id="1" href="/User/Index/Page-1">1</a></li>
+                <li class=""><a id="2" href="/User/Index/Page-2">2</a></li>
+                <li class=""><a id="3" href="/User/Index/Page-3">3</a></li>
+                <li class=""><a id="4" href="/User/Index/Page-4">4</a></li>
+                <li class=""><a id="5" href="/User/Index/Page-5">5</a></li>
+                <li class=""><a id="6" href="/User/Index/Page-6">6</a></li>
+                <li class=""><a id="7" href="/User/Index/Page-7">7</a></li>
+                <li class=""><a id="8" href="/User/Index/Page-8">8</a></li>
+                <li class=""><a id="9" href="/User/Index/Page-9">9</a></li>
+                <li class=""><a id="10" href="/User/Index/Page-10">10</a></li>
+                <li><a id="2" href="/User/Index/Page-2">&gt;&gt;</a></li>
+            </ul>
+        </nav></div>
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fUser%2fIndex">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+</body>
+</html>

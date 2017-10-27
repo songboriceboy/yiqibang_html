@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>注册·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#checkUserName").click(function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                var name = $("#UserName").val();
+                if (name == "") {
+                    alert("您还没有输入用户名。");
+                } else {
+                    $.ajax({
+                        url: "/Register/UserNameIsExist",
+                        type: "POST",
+                        data: { 'name': name },
+                        beforeSend: function () {
+                            $this.html('<span class="glyphicon glyphicon-hourglass"></span> 稍等');
+                        },
+                        success: function (data) {
+                            if (!data) {
+                                alert("恭喜！该用户名还未被使用。");
+                            }
+                            else {
+                                alert("很抱歉，该用户名已经被使用。换一个吧。");
+                            }
+                        },
+                        complete: function () {
+                            $this.html('<span class="glyphicon glyphicon-search"></span> 检查');
+                        }
+                    });
+                }
+            });
+
+            $("[zyf-search-by-username]").focusout(searchUserByName);
+        })
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+    <div class="return-prepage">
+        <a href="/"><span class="glyphicon glyphicon-share-alt descend-2px"></span> 返回</a>
+    </div>
+
+
+    <div class="container dualcolumns-container">
+        <div class="page-header">
+            <h2>
+
+                <span class="glyphicon glyphicon-registration-mark descend-4px" aria-hidden="true"></span> 注册
+
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="container" style="margin-bottom: 16px;">
+                    <div class="row">
+                        <a class="visible-sm visible-xs pull-right" show-introduction>
+                            <span class="glyphicon glyphicon-question-sign"></span><span style="margin-left:4px;">
+                                说明
+                        </span>
+                        </a>
+                    </div>
+                </div>
+
+
+                <form action="/Register/Home?prepage=%2f" method="post">    <div class="form-group">
+                    <label>用户名：（* 必填）</label>
+                    <div class="input-group">
+                        <input class="form-control" data-val="true" data-val-length="* 用户名的长度不能大于20" data-val-length-max="20" data-val-required="* 用户名不能为空" id="UserName" name="UserName" placeholder="不是昵称，是登录用户名" type="text" value="" />
+                        <a class="input-group-addon" id="checkUserName"><span class="glyphicon glyphicon-search"></span> 检查</a>
+                    </div>
+                    <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                </div>
+                    <div class="form-group">
+                        <label>密码：（* 必填）</label>
+                        <input class="form-control" data-val="true" data-val-length="* 密码的长度不能小于4，大于20" data-val-length-max="20" data-val-length-min="4" data-val-required="* 密码不能为空" id="Password" name="Password" placeholder="不少于4个字符" type="password" />
+                        <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>验证密码：（* 必填）</label>
+                        <input class="form-control" data-val="true" data-val-equalto="* 确认密码和密码不一致" data-val-equalto-other="*.Password" data-val-required="* 确认密码不能为空" id="ConfirmPassword" name="ConfirmPassword" placeholder="和密码相同" type="password" />
+                        <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>邀请人：（* 可获得 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a> 奖励）</label>
+                        <input class="form-control" data-val="true" data-val-length="* 邀请人的长度不能大于20" data-val-length-max="20" id="InviterName" name="InviterName" placeholder="他的用户名，模糊查询只能从头开始" type="text" value="" zyf-search-by-username="" />
+                        <div class="container" zyf-search-username-result></div>
+                        <span class="field-validation-valid" data-valmsg-for="InviterName" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>邀请码：</label>
+                        <input class="form-control" data-val="true" data-val-regex="* 邀请码只能是4位数字" data-val-regex-pattern="[0-9]{4}" id="InviteCode" name="InviteCode" placeholder="4位数字" type="text" value="" />
+                        <span class="field-validation-valid" data-valmsg-for="InviteCode" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>验证码：（* 必填）</label>
+                        <br />
+                        <span zyf-img-code>
+
+    <input class="form-control" data-val="true" data-val-length="* 验证码的长度只能等于4" data-val-length-max="4" data-val-length-min="4" data-val-required="* 验证码不能为空" id="InputImageCode" name="InputImageCode" style="width:80px; display: inline;" type="text" value="" />
+    <img zyf-image-code style="vertical-align: middle; display: none;" />
+    <a name="imageCode" />
+
+    <a href="#" zyf-refresh-image-code style="font-size: 12px; display: none">
+        看不清楚
+    </a>
+    <span zyf-image-code-reminder>点击输入框显示</span>
+    <span zyf-image-code-error class="field-validation-error"></span>
+    <br />
+    <span class="field-validation-valid" data-valmsg-for="InputImageCode" data-valmsg-replace="true"></span>
+</span>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                //JS编号：001
+                                //用途：获取焦点时，产生验证码
+                                $("#InputImageCode").focus(function (event) {
+                                    //note:有验证码时不需要刷新验证码
+                                    var $image = $("[zyf-image-code]");
+                                    if ($image.is(":not([src])")) {
+                                        $($image).attr("src", "/Shared/GetImageCode?NumKey=" + Math.random()).show();
+                                        $("[zyf-refresh-image-code]").show();
+                                        $("[zyf-image-code-reminder]").hide();
+                                    }
+                                });
+                                //JS编号：002
+                                //用途：刷新验证码
+                                $("[zyf-refresh-image-code]").click(function (event) {
+                                    event.preventDefault();
+                                    $("[zyf-image-code]")[0].src = '/Shared/GetImageCode?refresh=1&NumKey=' + Math.random();
+                                });
+                            })
+                            //Note: 仅仅当Aajx调用时才需要使用该函数，用以保持和非Ajax调用一样的效果
+                            function initImageCode(clearInputImageCode) {
+                                if (clearInputImageCode) {
+                                    $("#InputImageCode").val(undefined)
+                                }
+                                $("[zyf-image-code-error]").empty();
+                                $("[zyf-image-code]").removeAttr("src").hide();
+                                $("[zyf-refresh-image-code]").hide();
+                                $("[zyf-image-code-reminder]").show();
+                            }
+                        </script>
+
+                    </div>
+                    <div class="submit">
+                        <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                        <input type="reset" class="btn btn-default" />
+                        <a href="/Log/On?prepage=%2f" class="btn pull-right"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+                    </div>
+                </form>
+
+
+
+
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="introductionLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="introductionLabel"></h4>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 visible-lg visible-md">
+                <div page-introduction>
+                    <h3 class="text-info" style="margin-bottom: 20px;"><span class="glyphicon glyphicon-question-sign descend-4px"></span> 说明</h3>
+                    <ol class="page-introduction-ol" zyf-page-introduction-body>
+
+                        <li>我们希望通过<a href="/About/Us" target="_blank">一起帮</a>，能<span class="text-primary text-bold">直接解决</span>大家在<span class="text-primary">电脑操作/软件使用/编程学习</span>等方面的<span class="text-primary text-bold">具体问题</span>。</li>
+                        <li>现在互联网远程技术<span class="text-muted">（比如QQ桌面共享）</span>已经非常成熟，当我们再遇到上述问题，如果别人能<span class="text-primary">直接远程给予帮助</span>，岂不是好？</li>
+                        <li>当然，你也可以在你熟悉的领域去<span class="text-primary">帮助别人</span>。由此而形成我们这个“你帮他他帮我我帮你，大家一起帮”的网上互助社区平台。</li>
+                        <li>公平起见，我们还引入了 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a> 这一概念，以记录和衡量社区成员的收获和贡献。</li>
+                        <li>赶快加入我们，赚取时间币吧！</li>
+                        <li>不要忘了填写你的<b>邀请人</b>，注册成功后你和他都可以获得时间币奖励哟。</li>
+                        <li><a href="/About/Us" target="_blank"><span class="glyphicon glyphicon-hand-right"></span> 了解更多</a></li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a href="/Log/On?prepage=%2f">
+                    <span class="glyphicon glyphicon-log-in descend-2px"></span> 登陆
+                </a>
+                <a href="/Register/Home?prepage=%2f">
+                    <span class="glyphicon glyphicon-registration-mark descend-2px"></span> 注册
+                </a>
+                <a href="/Password/Forget">
+                    <span class="glyphicon glyphicon-lock descend-2px"></span> 忘记密码
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

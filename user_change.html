@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>兑换时间币·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("[zyf-credit-buy-submit]")
+                .attr("type", "button")
+                .click(function () {
+                    if ($("form").valid()) {
+                        $("[zyf-credit-buy-submit-modal]").modal("show");
+                    }
+                })
+
+            $("[zyf-credit-buy-submit-modal]").on("hide.bs.modal", function () {
+                $("form").submit();
+                $("[zyf-credit-buy-submit]").hide();
+            })
+
+            $.validator.addMethod("creditEnough", function (value, element, param) {
+                return this.optional(element) ||
+                    parseInt(value) <= parseInt($(param).text());
+            }, "* 请求兑换的时间币大于可兑换时间币");
+
+        })
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+    <div class="return-prepage">
+        <a href="/Message/Mine"><span class="glyphicon glyphicon-share-alt descend-2px"></span> 返回</a>
+    </div>
+
+
+    <div class="container dualcolumns-container">
+        <div class="page-header">
+            <h2>
+
+                <span class="glyphicon glyphicon-import descend-4px" aria-hidden="true"></span> 兑换时间币
+
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="container" style="margin-bottom: 16px;">
+                    <div class="row">
+                        <a class="visible-sm visible-xs pull-right" show-introduction>
+                            <span class="glyphicon glyphicon-question-sign"></span><span style="margin-left:4px;">
+
+    <text>最近兑换</text>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="yellow-highlight" style="padding:10px; margin-bottom:20px;">
+                    <p>
+                        系统要求的最低兑换门槛为： 200 分钟
+                    </p>
+                    <p>目前，你的 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>：</p>
+                    <table class="table" style="margin-bottom:0px;">
+                        <tr>
+                            <th>结余：</th>
+                            <td class="text-left">0 分钟</td>
+                        </tr>
+                        <tr>
+                            <th>其中充值：</th>
+                            <td class="text-left">0 分钟</td>
+                        </tr>
+                        <tr title="可兑换 = 结余 - 充值 - 门槛" data-toggle="tooltip">
+                            <th>可兑换：</th>
+                            <td class="text-left"><span zyf-current-available>-200</span> 分钟</td>
+                        </tr>
+                    </table>
+                </div>
+                <p><span class="glyphicon glyphicon-warning-sign text-warning"></span> 对不起，你的可兑换时间币数量不够……</p>
+                <p class="lead text-primary">继续努力吧，(ง •_•)ง,加油！</p>
+
+
+
+
+
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="introductionLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="introductionLabel"></h4>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 visible-lg visible-md">
+                <div page-introduction>
+
+                    <h3 class="text-info" style="margin-bottom: 20px;">
+                        <span class="glyphicon glyphicon-list-alt descend-4px"></span> 最近兑换记录
+                    </h3>
+                    <div zyf-page-introduction-body>
+                        <div style="margin-bottom:10px;">
+                            <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年09月28日 19点38分</small>
+
+                            <div>
+                                <a href="/User/1" zyf-show-contact="1">叶飞</a>
+                                兑换了 200 分钟 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>，获得了 <span class="text-muted">200元</span>。
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fMessage%2fMine">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

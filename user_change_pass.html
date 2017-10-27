@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>修改密码·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+    <div class="return-prepage">
+        <a href="/Message/Mine"><span class="glyphicon glyphicon-share-alt descend-2px"></span> 返回</a>
+    </div>
+
+
+    <div class="container dualcolumns-container">
+        <div class="page-header">
+            <h2>
+
+                <span class="glyphicon glyphicon-lock descend-4px" aria-hidden="true"></span> 修改密码
+
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="container" style="margin-bottom: 16px;">
+                    <div class="row">
+                        <a class="visible-sm visible-xs pull-right" show-introduction>
+                            <span class="glyphicon glyphicon-question-sign"></span><span style="margin-left:4px;">
+                                说明
+                        </span>
+                        </a>
+                    </div>
+                </div>
+
+                <form action="/Password/Change?prepage=%2fMessage%2fMine" method="post">    <div class="form-group">
+                    <label>原密码：（* 必填）</label>
+                    <input class="form-control" data-val="true" data-val-length="* 原密码的长度不能小于4，大于25" data-val-length-max="25" data-val-length-min="4" data-val-required="* 原密码不能为空" id="OldPassword" name="OldPassword" placeholder="不少于4个字符" type="password" />
+                    <span class="field-validation-valid" data-valmsg-for="OldPassword" data-valmsg-replace="true"></span>
+                </div>
+                    <div class="form-group">
+                        <label>新密码：（* 必填）</label>
+                        <input class="form-control" data-val="true" data-val-length="* 新密码的长度不能小于4，大于25" data-val-length-max="25" data-val-length-min="4" data-val-required="* 新密码不能为空" id="NewPassword" name="NewPassword" placeholder="不少于4个字符" type="password" />
+                        <span class="field-validation-valid" data-valmsg-for="NewPassword" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码：（* 必填）</label>
+                        <input class="form-control" data-val="true" data-val-equalto="* 确认密码和密码不一致" data-val-equalto-other="*.NewPassword" data-val-length="* 确认密码的长度不能小于4，大于25" data-val-length-max="25" data-val-length-min="4" data-val-required="* 确认密码不能为空" id="ComfirmPassword" name="ComfirmPassword" placeholder="请再输入一次密码" type="password" />
+                        <span class="field-validation-valid" data-valmsg-for="ComfirmPassword" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="submit">
+                        <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                        <input type="reset" class="btn" value="重填" />
+                    </div>
+                </form>
+
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="introductionLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="introductionLabel"></h4>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 visible-lg visible-md">
+                <div page-introduction>
+                    <h3 class="text-info" style="margin-bottom: 20px;"><span class="glyphicon glyphicon-question-sign descend-4px"></span> 说明</h3>
+                    <ol class="page-introduction-ol" zyf-page-introduction-body>
+
+                        <li>即使在已登录的状态下，也要再输入一次“原密码”，是出于安全性的考虑。</li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fMessage%2fMine">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

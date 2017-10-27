@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>侧边栏广告·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <script>
+        $().ready(function () {
+
+            $('form').data("validator").settings.ignore = "";
+            var countPerDay = parseInt($("[zyf-ad-in-widget-count-per-day]").text());
+
+            $("[zyf-ad-in-widget-position]").change(function () {
+                var $container = $("[zyf-ad-in-widget-date-container]");
+                var $this = $(this);
+                $container.html("");
+                if ($this.val() === "") {
+                    $container.append('<p class="text-info yellow-highlight" style="border:1px dashed; padding:5px; border-radius:3px 4px;">* 请首先选择广告位</p>');
+                } else {
+                    $.ajax({
+                        url: "/AdInWidget/_Date?position=" + $this.val(),
+                        method: "GET",
+                        cache: false,
+                        beforeSend: function () {
+                            $container.append('<p class="text-info"><span class="glyphicon glyphicon-hourglass"></span> 查询中，请稍等……</p>');
+                        },
+                        success: function (data) {
+                            $container.html("").append(data);
+                            var $available = $container.find("[zyf-ad-in-widget-date-available]");
+                            $available
+                                .hover(function () {
+                                        $(this).addClass("text-bold");
+                                    },
+                                    function () {
+                                        $(this).removeClass("text-bold");
+                                    })
+                                .click(function () {
+                                    $(this).toggleClass("selected");
+
+                                    var $selected = $container.find(".selected")
+                                    var selectedDates = getSelecedDatesForAdInWidget($selected);
+
+                                    var sumOfConsumed = $selected.length * countPerDay;
+                                    $("[zyf-ad-in-widget-count-sum]").text(sumOfConsumed);
+                                    var remain = parseInt($("[zyf-credit-balance]").text()) - sumOfConsumed;
+                                    $("[zyf-ad-in-widget-count-remain]").text(remain);
+                                    $("[zyf-ad-in-widget-count-remain-post]").val(remain);
+
+                                    $("[zyf-ad-in-widget-selected-dates]")
+                                        .val(selectedDates);
+                                });
+                            $("[zyf-ad-in-widget-date-used]")
+                                .each(function () {
+                                    if (isCurrent($(this).data("belong-id"))) {
+                                        $(this).removeClass("used").addClass("used-self");
+                                    }
+                                })
+                                .click(function () {
+                                    showRemind($(this).find("[zyf-ad-in-widget-date-used-detail]").html());
+                                });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            JqueryAjaxError(jqXHR, textStatus, errorThrown);
+                            $this.show();
+                        }
+
+                    });
+                }
+            })
+
+
+            function getSelecedDatesForAdInWidget(elements) {
+                var result = "";
+                for (var i = 0; i < elements.length; i++) {
+                    result += ($(elements[i]).data("full-date") + ",");
+                }
+                return result;
+            }
+        })
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fMessage%2fMine"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+    <div class="return-prepage">
+        <a href="/Message/Mine"><span class="glyphicon glyphicon-share-alt descend-2px"></span> 返回</a>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class="page-header">
+
+                <span class="glyphicon glyphicon-edit descend-4px"></span> 侧边栏广告
+                <a href="" style="font-size:14px; margin-left:20px;">
+                    <span class="glyphicon glyphicon-question-sign"></span> 了解更多
+                </a>
+
+            </h2>
+
+            <div style="margin-bottom:20px;" class="credit-status-container">
+    <span class="lead">
+        <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>
+    </span>
+                <span class="pull-right">
+    <span class="glyphicon glyphicon-ok text-success hide" zyf-credit-correct></span>
+    <span class="glyphicon glyphicon-question-sign text-warning hide" zyf-credit-wrong></span>
+</span>
+                <span class="credit-status">获得：<span zyf-credit-gain></span>分钟 </span>
+                <span class="credit-status">消耗：<span zyf-credit-consume></span>分钟  </span>
+                <span class="credit-status">剩余：<span zyf-credit-balance>0</span>分钟 </span>
+                <input type="hidden" value="1247" zyf-credit-user-id />
+
+                <script>
+                    $(document).ready(function () {
+                        showCredit();
+                        $("[zyf-credit-wrong]").click(function () {
+                            showRemind('<p><span class="glyphicon glyphicon-question-sign"></span> 你的积分好像不对哟！请<a href="" target="_blank">联系管理员（QQ：2282636022）</a>核实该情况。</p>');
+                        })
+                    })
+                </script>
+
+            </div>
+            <form action="/AdInWidget/Write?prepage=%2fMessage%2fMine" method="post">    <div class="form-group">
+                <label>选择广告位：（* 必选）</label>
+                <select name="position" id="position" data-val="true" class="form-control" data-val-required="* 广告位不能为空" zyf-ad-in-widget-position>
+                    <option value="">-------------</option>
+                    <option value="1">---第 1 位---</option>
+                    <option value="2">---第 2 位---</option>
+                    <option value="3">---第 3 位---</option>
+                    <option value="4">---第 4 位---</option>
+                    <option value="5">---第 5 位---</option>
+                    <option value="6">---第 6 位---</option>
+                    <option value="7">---第 7 位---</option>
+                    <option value="8">---第 8 位---</option>
+                </select>
+                <span class="field-validation-valid" data-valmsg-for="position" data-valmsg-replace="true"></span>
+            </div>
+                <label>选择日期：（鼠标点击选中/取消）</label>
+                <div zyf-ad-in-widget-date-container>
+                    <p class="text-info yellow-highlight" style="border:1px dashed; padding:5px; border-radius:3px 4px;">* 请首先选择广告位</p>
+                </div>
+                <div class="form-group">
+                    <input data-val="true" data-val-required="* 选择日期不能为空" id="SelectedDates" name="SelectedDates" type="hidden" value="" zyf-ad-in-widget-selected-dates="" />
+                    <span class="field-validation-valid" data-valmsg-for="SelectedDates" data-valmsg-replace="true"></span>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-right ad-in-widget-credit-status">
+                        <label><span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a> 花费</label>
+                        <label>每天需要： </label><span class="text-info" zyf-ad-in-widget-count-per-day>10</span> 分钟
+                        <label>一共需要 ：</label><span class="text-warning" zyf-ad-in-widget-count-sum></span> 分钟
+                        <label>剩余 ：</label><span class="text-warning" zyf-ad-in-widget-count-remain></span> 分钟
+                    </div>
+                    <input data-val="true" data-val-number="字段 RemainCredit 必须是一个数字。" data-val-range="* 剩余时间币不够" data-val-range-max="2147483647" data-val-range-min="0" data-val-required="RemainCredit 字段是必需的。" id="RemainCredit" name="RemainCredit" type="hidden" value="0" zyf-ad-in-widget-count-remain-post="" />
+                    <span class="field-validation-valid" data-valmsg-for="RemainCredit" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label>之前用过的广告：</label>
+                    <select class="form-control" data-val="true" data-val-number="字段 SelectedHistory 必须是一个数字。" id="Content_SelectedHistory" name="Content.SelectedHistory" zyf-ad-in-widget-history-select=""><option value="">----- 使用新的广告 -----</option>
+                    </select>
+                </div>
+                <ul class="hide" zyf-ad-in-widget-history-url>
+                </ul>
+                <div class="form-group">
+                    <label>文字内容：（* 必填）</label>
+                    <input class="form-control" data-val="true" data-val-length="* 文本的长度不能大于30" data-val-length-max="30" data-val-required="* 文本不能为空" id="Content_Text" name="Content.Text" placeholder="最多不超过24个字符" type="text" value="" zyf-ad-in-widget-input-text="" />
+                    <span class="field-validation-valid" data-valmsg-for="Content.Text" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label>链接：（* 必填）</label>
+                    <input class="form-control" data-val="true" data-val-regex="* URL格式错误" data-val-regex-pattern="http(s)?://.*" data-val-required="* 链接不能为空" id="Content_Url" name="Content.Url" placeholder="http或https开头的网址" type="text" value="" zyf-ad-in-widget-input-url="" />
+                    <span class="field-validation-valid" data-valmsg-for="Content.Url" data-valmsg-replace="true"></span>
+                </div>    <div class="submit">
+                    <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                    <input type="reset" class="btn btn-default" value="重填" />
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col-md-3" style="margin-top: 40px;">
+
+            <a href="/Profile/Write?prepage=%2fMessage%2fMine" class="btn pull-right hide" zyf-profile-edit>
+                <span class="glyphicon glyphicon-edit descend-2px"></span>
+                <span>修改</span>
+            </a>
+            <div class="img-responsive img-thumbnail" id="profile-no-picture">
+                <span class="glyphicon glyphicon-camera descend-2px" id="camera"></span>
+                <div id="wait">
+                    等待上传中<span class="glyphicon glyphicon-hourglass descend-2px"></span>...
+                </div>
+            </div>
+            <div class="user-show">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>用户：</label>
+                        <a href="/User/1247" zyf-show-contact="1247">songboriceboy</a>
+
+                    </div>
+                    <input type="hidden" value="1247" zyf-profile-user-id />
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>性别：</label>
+                        男
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>生日：</label>
+                        2001 <span>年</span>
+                    </div>
+                </div>
+                <div>
+                    <label>关注：</label>
+                    <p>
+                        <span title="被使用过 28 次" data-toggle="tooltip" class="badge">编程开发语言</span>
+                        <span title="被使用过 5 次" data-toggle="tooltip" class="badge">Python</span>
+                        <span title="被使用过 0 次" data-toggle="tooltip" class="badge">谁说的</span>
+                    </p>
+                </div>
+                <div><label>自我介绍：</label></div>
+                <p style="word-break:break-all;">
+                    点点滴滴
+                </p>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fMessage%2fMine">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

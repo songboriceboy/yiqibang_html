@@ -1,0 +1,833 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="大神自由飞的原创首发精品文章，菜鸟入门编程开发必看，还包括求职入职、代码规范、项目管理、系统架构等一系列程序猿关心的问题……" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>精品文章·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fArticle"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fArticle"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fArticle"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fArticle"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fArticle"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fArticle"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fArticle"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">
+
+                <span class="glyphicon glyphicon-list-alt descend-4px"></span> 精品文章
+
+                <small style="" class="visible-xs-inline visible-sm-inline">
+                    <a zyf-show-widget>
+
+                        <span class="glyphicon glyphicon-expand descend-2px"></span> 更多
+
+                    </a>
+                </small>
+            </h2>
+
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 18点12分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/11" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/11" target="_blank">入坑IT十年（二）技术以外</a> </h4>
+                    <p style="word-break:break-all;">
+
+                        上一篇博客里提到：技术越来越简单，发布后不久，就看到《技术并不是越来越简单》，这显然是打擂台来了。
+
+
+                        技术究竟是不是越来越简单？其实这个问题，要看你究竟是以什么角度来思考这个问题。我们可以举很多例子，比如：
+
+
+                        生火，是不是越来越简单？
+
+
+
+                        你可以说：是的，以前得钻木取火，太特么难了（贝爷除外）！现在打火机“啪”的一声，瞬间搞定，好简单。
+
+
+                        但你也可以说：哪里哟！打火机要复杂得多，好不好？塑料外壳、液化气、喷嘴、打火石……任何一个零部件的制作都是现代
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">程序员</span>
+                        <span class="badge">十年</span>
+                        <span class="badge">感悟</span>
+                        <span class="badge">技术</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/11#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>0
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=11&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=11&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 17点10分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/10" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/10" target="_blank">入坑IT都快十年了</a> </h4>
+                    <p style="word-break:break-all;">
+                        从包工头到程序猿，一晃就是快十年了。想想我当初“三个月学会编程”的计划，不觉莞尔。计划从三个月变成一年，又从一年改到三年，再然后从三年到十年……我就这样磨磨蹭蹭的一路走了过来？回过头来看看，有没有什么弯路？是不是耗时太长？有没有什么心得体会？
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">程序员</span>
+                        <span class="badge">十年</span>
+                        <span class="badge">感悟</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/10#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>0
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=10&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=10&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年09月27日 21点04分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/9" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/9" target="_blank">程序员的工作</a> </h4>
+                    <p style="word-break:break-all;">
+
+                        写这个系列的时候我一直有点不踏实。因为我想到了一个小故事：小马过河。这个故事告诉我们一个道理：水深水浅只有自己试过了才知道，或者，水是深还是谁浅，这本来就是因人而异的。
+
+
+                        同一条河水，对老牛来说就很浅，对松鼠来说就很深，对小马则是刚刚好。
+
+
+                        编程写代码其实也是这样。别人觉得挺好玩的一件事，可能你头大如斗；别人觉得痛不欲生的东西，你可能安之若泰。你看，我上一篇文章就开始有人点反对了不是？每一个人的喜好不一样、追求不一样，同一个事情，得出来的结论也就不一样。
+
+
+                        所以我其实有
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">程序员</span>
+                        <span class="badge">软件开发</span>
+                        <span class="badge">工作</span>
+                        <span class="badge">特色</span>
+                        <span class="badge">环境</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/9#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>2
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=9&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>9</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=9&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年09月15日 11点23分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/8" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/8" target="_blank">一次尝试：真正的项目实战培训</a> </h4>
+                    <p style="word-break:break-all;">
+
+                        人之患，在好为人师。
+
+
+                        我也不知道是从什么时候开始，大概是从我写《架构之路》的系列博客开始吧？心里就应该有了这么一种冲动，想吧自己的一些所思所得，和大家一起分享。
+
+
+                        估计这是人类一种与生俱来的的冲动吧？自我表达和展示、希望获得认同和赞扬，不然为什么github上那么多开源项目，Stack Overflow上面热火朝天，都是些无私分享的人啊！
+
+
+                        但无偿的东西，无私的奉献，质量和数量都不能要求太高，O(∩_∩)O~
+
+
+                        不说别人，就我自己，《架构之路》半途而废，改成
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">培训</span>
+                        <span class="badge">项目实战</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/8#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>12
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=8&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>8</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=8&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年08月22日 11点56分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/7" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/7" target="_blank">十年之后再看“面向对象”</a> </h4>
+                    <p style="word-break:break-all;">
+
+                        一起帮里有人问“面向对象”的问题。但我创建“一起帮”的目的是帮人解决“具体的”“实务性的”问题，“面向对象”太过于抽象，所以没批准发布。后来在QQ群里讨论，看他们七嘴八舌闹得慌，突然有一种“多情应笑我，早生华发”的萧瑟之感。
+
+
+                        一转眼，我学编程都已经十年了。
+
+
+                        十年之前，“面向对象”火得一塌糊涂。
+
+
+                        十年之后，“面向对象”，没想到，还是这样云里雾里……
+
+
+                        &nbsp;
+
+
+                        回头想想，之所以云里雾里，我认为一个很大的原因：我们把“面向对象”神话了。
+
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">面向对象</span>
+                        <span class="badge">编程</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">软件工程</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/7#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>8
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=7&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>10</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=7&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年06月30日 12点03分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/6" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/6" target="_blank">我该不该转行？（三）我都一把年纪了</a> </h4>
+                    <p style="word-break:break-all;">
+
+                        毫无疑问，这是一个非常沉重的话题。
+
+
+                        和还在上大学的同学不一样，专业换了也就换了，工作几年的人，丢掉之前几年的“工作经验”，是相当……相当那啥的！？
+
+
+                        前面已经说了，文凭其实不值钱，但工作经验值钱啊！尤其是刚毕业之后的那几年，成长是“嗖嗖嗖”的：多少人，一辈子就啃这点成长值，就啃这点老本过日子？真不是乱说，因为很多人的工作，所谓“入行”之后，就是“重复劳动”，本质上就是用劳动时间换工资，劳动者本人的技能是不会增长或者增长得极其缓慢的。
+
+
+                        “万事开头难”，最难的阶段你都挺
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">转行</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">计算机</span>
+                        <span class="badge">IT行业</span>
+                        <span class="badge">入门</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/6#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>6
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=6&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>16</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=6&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>2</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年06月19日 21点29分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/5" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/5" target="_blank">我该不该转行？（二）战术上重视</a> </h4>
+                    <p style="word-break:break-all;">
+                        了解自己，比了解IT行业，还要重要还要难。难的我们放到后面，先说简单的，就IT行业这点事。
+                        IT行业，我的感觉，是如火如荼。
+                        除了这些大家都能看得到的，我最想告诉、最想提醒大家的是：
+                        作为一个普通劳动者，行业红利其实远没有你想象的那么大。因为这是一个充分流动的世界，一个行业火起来，必然有更多的人涌入，来拉低行业的利润水平。
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">转行</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">计算机</span>
+                        <span class="badge">IT行业</span>
+                        <span class="badge">入门</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/5#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>12
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=5&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>13</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=5&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年06月16日 21点06分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/4" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/4" target="_blank">我该不该转行？（一）野生程序员的优势</a> </h4>
+                    <p style="word-break:break-all;">
+                        这是一个很大的问题，有非常多的切入角度。我谈几个我自己的，很少有人提到的。
+                        首先，给大家卸卸“包袱”。我发现很多同学，把转行这事，看得太重。一是觉得自己本来的专业丢了可惜；二是怕重头学习吃力，又没文凭啥的，社会不认可。其实啊，这些事，都不算个事……
+                        你的纠结就不是一个逻辑问题，而是一个心理问题：你放不放得下，敢不敢单枪匹马地闯？
+                        野生的程序员，有野性！他走到今天，是披荆斩棘一路杀过来的。野性，是一个文明社会越来越稀缺的资源。
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">转行</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">计算机</span>
+                        <span class="badge">IT行业</span>
+                        <span class="badge">入门</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/4#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>2
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=4&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>9</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=4&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年06月11日 21点24分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/3" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/3" target="_blank">写在前面</a> </h4>
+                    <p style="word-break:break-all;">
+                        首先第一点，我必须告诉大家，我为什么要写这个系列……如果你能接受这一点的话，我接着介绍一下我自己，供你参考一下，我说的话值不值得参考……如果你愿意相信的话，我自己给自己画个像：实战派……工程派……管理派……其实这都算不上自夸——有一些同学都不认为这是优势，是正道。随他了……
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">转行</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">计算机</span>
+                        <span class="badge">IT行业</span>
+                        <span class="badge">入门</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/3#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>3
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=3&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>12</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=3&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom:20px; padding-bottom:10px; border-bottom: 1px dashed #ccc;">
+                <div class="clearfix">
+                    <div>
+                        <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年06月10日 10点41分</small>
+
+                        <span class="pull-right">
+            <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+            <a href="/Article/Edit/2" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+        </span>
+                    </div>
+                    <h4> <a href="/Article/2" target="_blank">编程那些事：菜鸟入门（目录）</a> </h4>
+                    <p style="word-break:break-all;">
+                        大飞哥倾力之作，面向有意入行IT/开发/编程的初学者，系列文章《编程那些事》的目录清单。
+                        以上只是一个最初浅的构思，每篇文章写完之后，就会附上链接。
+                        欢迎任何形式的留言，提出你的问题，只要我能解答的，都会尽量穿插安排在这个系列之中。
+                    </p>
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">转行</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">计算机</span>
+                        <span class="badge">IT行业</span>
+                        <span class="badge">入门</span>
+                    </div>
+                    <div class="pull-right appraise-status">
+                        <a class="appraise-status-item text-info" href="/Article/2#comments">
+                            <span class="glyphicon glyphicon-comment descend-2px"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论：</span>5
+                        </a>
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=2&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>10</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=2&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <nav>
+                <ul class="pagination">
+                    <li class="active"><a id="1" href="/Article/Page-1">1</a></li>
+                    <li class=""><a id="2" href="/Article/Page-2">2</a></li>
+                    <li><a id="2" href="/Article/Page-2">&gt;&gt;</a></li>
+                </ul>
+            </nav>
+
+
+        </div>
+        <div style="margin-top:55px" class="col-md-4 visible-md visible-lg">
+
+            <div zyf-widget-content  class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-tags descend-4px"></span> 关键字</div>
+                <hr />
+                <div zyf-keyword-widget-content></div>
+                <a href="" class="btn btn-default pull-right" zyf-keyword-widget-another>
+                    <span class="glyphicon glyphicon-random descend-2px"></span>
+                    <span style="margin-left:5px;">换一批</span>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div class="ad-in-widget">
+
+                    <span class="item-1">1</span>
+                    <a href="http://nutzam.com" target="_blank">Nutz-Java程序员的另一个选择</a>
+                </div>
+                <a href="/AdInWidget/Write" target="_blank" class="pull-right text-muted">
+                    <small zyf-ad-in-widget-remind>
+                        <span class="glyphicon glyphicon-tint descend-2px"></span> 广告
+                        <span zyf-ad-in-widget-remind-suffix class="hide">，你也可以发布哟！</span>
+                    </small>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-bell descend-4px"></span> 即时消息</div>
+                <hr />
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点31分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/829" zyf-show-contact="829">码农一号</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/169" target="_blank">android RecyclerView数据源刷新...</a>有<a href="http://17bang.ren/User/1376" target="_blank">vite</a>的新应答：<span class="text-muted">抢： 我可以试试……</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点39分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1175" zyf-show-contact="1175">dybai</a>
+                    </small>
+                    <p style="clear:both;">文章的评论<a href="http://17bang.ren/Article/7" target="_blank">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</a>被标识为<span class="text-success"> <span class="glyphicon glyphicon-flag"></span> 精选</span>，获得 <span class="glyphicon glyphicon-time credit"></span> <a href="http://17bang.ren/FAQ/Credit" target="_blank">时间币</a> 奖励10分钟</p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点38分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+                    </small>
+                    <p style="clear:both;">文章<a href="http://17bang.ren/Article/7" target="_blank">十年之后再看“面向对象”</a>有<a href="http://17bang.ren/User/1175" target="_blank">dybai</a>的新应答：<span class="text-muted">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 15点09分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/883" zyf-show-contact="883">韩慎之</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/141" target="_blank">三个小问题 直接图示。git bash 如图这样子...</a>有<a href="http://17bang.ren/User/1360" target="_blank">zakeyken</a>的新应答：<span class="text-muted">看不到图片，不知道什么情况</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 14点51分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1084" zyf-show-contact="1084">toone888</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/170" target="_blank">vs2010怎么打开vs2013项目（vs2012...</a>有<a href="http://17bang.ren/User/1" target="_blank">叶飞</a>的新应答：<span class="text-muted">10分钟时间币，是不是太少了点~~~~~</span></p>
+                </div>
+                <a href="/Message/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 全部消息</a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-user descend-2px"></span> 新注册用户</div>
+                <hr />
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点19分</small>
+
+                    <div>
+                        <a href="/User/1379" zyf-show-contact="1379">wp90925</a>
+
+                        <span>男，</span>
+                        <span>1999年6月双子座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点14分</small>
+
+                    <div>
+                        <a href="/User/1378" zyf-show-contact="1378">青云</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点41分</small>
+
+                    <div>
+                        <a href="/User/1377" zyf-show-contact="1377">sjt157</a>
+
+                        <span>男，</span>
+                        <span>1994年4月金牛座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点53分</small>
+
+                    <div>
+                        <a href="/User/1376" zyf-show-contact="1376">vite</a>
+
+                        <span></span>
+                        <span></span>
+                        <div style="word-break:break-all;">
+                            <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                            https://github.com/ViTess
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点41分</small>
+
+                    <div>
+                        <a href="/User/1375" zyf-show-contact="1375">TEST-dk</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <a href="/User/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 更多</a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fArticle">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<style type="text/css">
+    h2 {
+        position: relative;
+    }
+
+    h2 > small {
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+    }
+
+    li {
+        margin-top: 5px;
+    }
+</style>
+
+
+</body>
+</html>

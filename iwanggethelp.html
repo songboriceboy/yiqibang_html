@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>我要求助·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!--<script>-->
+        <!--var _hmt = _hmt || [];-->
+        <!--(function () {-->
+            <!--var hm = document.createElement("script");-->
+            <!--hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";-->
+            <!--var s = document.getElementsByTagName("script")[0];-->
+            <!--s.parentNode.insertBefore(hm, s);-->
+        <!--})();-->
+    <!--</script>-->
+
+
+
+    <script src="/Scripts/kindeditor-v4.1/kindeditor.js"></script>
+    <script src="/Scripts/kindeditor-v4.1/lang/zh_CN.js"></script>
+    <script src="/Scripts/kindeditor.help.js"></script>
+    <script>
+        $(document).ready(function () {
+            var validator = $('form').data("validator");
+            if (validator !== undefined) {
+                //Note: 验证“隐藏”的控件
+                validator.settings.ignore = "";
+            }
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var needSaveDraft = true;
+
+            //检查是否有未使用的草稿并提示
+            $.ajax({
+                url: "/Problem/_DraftCheck",
+                method: "GET",
+                cache: false,
+                dataType: "html",
+                success: function (data) {
+                    $("[zyf-problem-new-draft-check]").append(data);
+                },
+                error: JqueryAjaxError
+            })
+
+            $("[zyf-exclude-draft]").click(function () {
+                needSaveDraft = false;
+            })
+
+            //自动保存
+            $(window).on("beforeunload", function () {
+                if (needSaveDraft) {
+                    var title = $.trim($("[zyf-problem-new-title]").val());
+                    var body = $.trim($("[zyf-kindeditor]").val());
+                    if (title !== "" || body !== "") {
+                        $.ajax({
+                            url: "/Problem/_NewDraft",
+                            data: $("form").serialize(),
+                            error: JqueryAjaxError
+                        });
+                    }
+                }
+            })
+
+            //显示推荐好心人
+            $("[zyf-user-recommend]").click(function (event) {
+                event.preventDefault();
+                var $modal = $("[zyf-global-modal]");
+                $modal.find(".modal-title")
+                    .html('<span class="glyphicon glyphicon-user"></span> 推荐求助人');
+                var keywords = $.trim($("[zyf-keyword-submit-value]").val());
+
+                if (keywords === "") {
+                    $modal.find(".modal-body")
+                        .html('<span class="text-info">(⊙_⊙)?</span> <br />你没有输入关键字，我们没法推荐哟……');
+                } else {
+                    $.ajax({
+                        url: "/User/_Recommend",
+                        data: { keywords: keywords },
+                        method: "POST",
+                        cache: false,
+                        beforeSend: function () {
+                            $modal.find(".modal-body")
+                                .html('<span class="glyphicon glyphicon-hourglass"></span>请稍等...');
+                        },
+                        success: function (data) {
+                            $modal
+                                .on('hidden.bs.modal', function () {
+                                    $("[zyf-problem-invitee-name]").val(
+                                        $(this).find("input:radio:checked").data("user-name"))
+                                        .focusout();
+                                })
+                                .find(".modal-body").html(data);
+                            activateTooltip();
+                        },
+                        error: JqueryAjaxError
+                    })
+                }
+
+                $("[zyf-global-modal]").modal('show');
+            });
+
+            //根据是否需要远程协助切换（富）文本框和文件上传
+            var $needRemoteHelp = $("[zyf-need-remote-help]");
+            toggleNeedRemoteHelp($needRemoteHelp);
+            $needRemoteHelp.change(function () {
+                toggleNeedRemoteHelp($(this));
+            })
+
+            //Note: 验证“隐藏”的控件
+            $('form').data("validator").settings.ignore = "";
+
+            $.validator.addMethod("creditEnough", function (value, element, param) {
+                return this.optional(element) || parseInt(value) <= parseInt($(param).text());
+            }, "* 悬赏的时间币大于现有的时间币");
+
+            $("[zyf-problem-invitee-name]").focusout(searchUserByName);
+
+            if ($.cookie("showNeedRemoteHelpModal") === undefined) {
+                $("[zyf-need-remote-help-modal]").modal("show");
+            }
+
+            $('[zyf-need-remote-help-modal]').on('hidden.bs.modal', function (e) {
+                //根据是否记住选择给cookie赋值
+                if ($("[zyf-remember-in-needremotehelp-modal]").is(":checked")) {
+                    var cookieName = "showNeedRemoteHelpModal";
+                    $.cookie(cookieName, false, { path: "/", expires: 365 });
+                }
+
+                //给页面上的“需要远程协助”赋值
+                $needRemoteHelp.prop("checked",
+                    $("[zyf-need-remote-help-in-modal]").is(":checked"));
+
+                toggleNeedRemoteHelp($needRemoteHelp);
+            })
+        })
+
+        function toggleNeedRemoteHelp(flag) {
+            var $uplaod = $("[zyf-problem-new-upload-file]");
+            if ((flag).is(":checked")) {
+                showTextArea();
+                $uplaod.show();
+            } else {
+                showKE();
+                $uplaod.hide();
+            }
+        }
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fProblem%2fNew"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class="page-header">
+
+                <span class="glyphicon glyphicon-question-sign descend-4px" aria-hidden="true"></span> 我要求助
+
+            </h2>
+
+            <div class="yellow-highlight text-info" style="padding:10px 10px 0 10px; margin-bottom:15px;">
+                <p><span class="glyphicon glyphicon-info-sign"></span> 这是你第一次发布求助，求助发布成功系统会奖励你 20 分钟 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>。</p>
+                <p>
+                    <span class="glyphicon glyphicon-info-sign"></span> 你还没有自由发布权限，为了保证求助的质量，我们会帮助你检查完善该求助内容，然后再公开显示，请耐心等待。<br />
+                    中途如有任何问题，工作人员会主动和你联系，请注意保持联系方式畅通。
+                </p>
+            </div>
+            <div zyf-problem-new-draft-check></div>
+            <form action="/Problem/New" method="post">    <div class="checkbox clearfix">
+                <label class="pull-right text-primary">
+                    <input checked="checked" data-val="true" data-val-required="NeedRemoteHelp 字段是必需的。" id="NeedRemoteHelp" name="NeedRemoteHelp" type="checkbox" value="true" zyf-need-remote-help="" /><input name="NeedRemoteHelp" type="hidden" value="false" />需要远程协助
+                </label>
+            </div>
+                <div class="form-group">
+                    <label>标题：（* 必填）</label>
+                    <input class="form-control" data-val="true" data-val-length="* 标题的长度不能大于255" data-val-length-max="255" data-val-required="* 标题不能为空" id="Title" name="Title" placeholder="简明勒要，不超过255字" type="text" value="" zyf-problem-new-title="" />
+                    <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label>说明：（* 必填）</label>
+                    <div class="pull-right">
+                        <small class="text-info" zyf-kindeditor-remind></small>
+
+                        <a class="btn btn-xs btn-primary" style="margin-right:5px" zyf-toggle-kindeditor>
+                            <span class="glyphicon glyphicon-refresh descend-2px"></span>切换
+                        </a>
+                    </div>
+                    <textarea class="form-control" cols="20" data-val="true" data-val-required="* 正文不能为空" id="Body_Content" name="Body.Content" placeholder="我们提倡&quot;一对一&quot;的远程协助，以直接的解决你的问题。
+所以求助只需简明扼要的说明问题即可，不要超过255个字符（还可以配图的嘛，一图胜千言！）。
+问题解决之后，你可以发布总结，详细的描述你的问题和解决过程，以帮助其他同学。" rows="20" zyf-kindeditor="">
+</textarea>
+                    <input data-val="true" data-val-required="IsRichHtml 字段是必需的。" id="Body_IsRichHtml" name="Body.IsRichHtml" type="hidden" value="" zyf-isRichHtml="" />
+                    <span class="field-validation-valid" data-valmsg-for="Body.Content" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group" zyf-problem-new-upload-file>
+                    <label>上传图片：（* 仅限jpg/png/gif）</label>
+                    <div class="input-group">
+                        <input class="form-control" type="text" zyf-file-upload-text zyf-file-upload-path placeholder="页面提交时上传文件">
+                        <span class="btn input-group-addon file_browser" zyf-file-upload-button>浏览</span>
+                    </div>
+
+                    <input name="Picture" zyf-file-upload-really type="file" class="hide" accept="image/png,image/gif,image/jpeg" />
+                    <span class="field-validation-valid" data-valmsg-for="Picture" data-valmsg-replace="true"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>关键字：（* 使用空格分隔）</label>
+                    <div zyf-keyword-show style="padding-bottom:3px;"></div>
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default ">--- 1级 ---</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" zyf-keyword-dropdownlist="1">
+                                <li><a data-keyword-id="163">编程开发语言</a></li>
+                                <li><a data-keyword-id="164">顾问咨询</a></li>
+                                <li><a data-keyword-id="161">操作系统</a></li>
+                                <li><a data-keyword-id="162">工具软件</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="input-group-btn input-group-btn-middle" zyf-keyword-dropdownlist-2>
+                            <button type="button" class="btn btn-default ">--- 2级 ---</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" zyf-keyword-dropdownlist="2"></ul>
+                        </div>
+                        <input type="text" class="form-control" placeholder="自定义关键字，使用空格分隔" zyf-keyword-input />
+                    </div>
+                    <input data-val="true" data-val-required="* 关键字不能为空" id="Keywords" name="Keywords" type="hidden" value="" zyf-keyword-submit-value="" />
+                    <span class="field-validation-valid" data-valmsg-for="Keywords" data-valmsg-replace="true"></span>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        var oldKeywords = $("[zyf-keyword-submit-value]").val().split(" ");
+                        $("[zyf-keyword-submit-value]").val("");
+                        for (var i = 0; i < oldKeywords.length; i++) {
+                            var keyword = $.trim(oldKeywords[i]);
+                            if (oldKeywords[i] !== "") {
+                                makeBadge(keyword, true);
+                            }
+                        }
+
+                        //二级关键字为空时提示
+                        $('[zyf-keyword-dropdownlist-2]').on('show.bs.dropdown', function () {
+                            if ($(this).find(".dropdown-menu").children().length === 0) {
+                                showRemind('<span class="glyphicon glyphicon-info-sign text-info descend-2px"></span> 还没有选择 --- 1级 --- 关键字呢。');
+                            }
+                        })
+
+                    })
+                </script>    <div class="form-group">
+                    <label>定向求助：（<a zyf-user-recommend>推荐</a> <small><span class="glyphicon glyphicon-question-sign text-info" data-toggle="tooltip" title="根据关键字筛选用户"></span></small>）</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="text" class="form-control" placeholder="输入你想要求助的大神用户名" zyf-problem-invitee-name />
+
+                    </div>
+                    <div class="user-search-result" style="display:table;" zyf-search-username-result></div>
+                </div>
+                <div class="form-group">
+                    <label>悬赏：（现有<span zyf-current-credit class="credit"></span>分钟 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>）</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span> </span>
+                        <input class="form-control" data-rule-creditEnough="[zyf-current-credit]" data-val="true" data-val-number="字段 悬赏时间币 必须是一个数字。" data-val-range="* 悬赏时间币最少不能低于10分钟" data-val-range-max="2147483647" data-val-range-min="10" data-val-required="* 悬赏时间币不能为空" id="Reward" name="Reward" placeholder="大于等于10的正整数" type="text" value="" />
+                        <span class="input-group-addon">分钟</span>
+                        <span class="input-group-addon">时间币</span>
+                    </div>
+                    <a href="/Credit/Buy"><span class="glyphicon glyphicon-yen"></span> 立即购买</a>
+                    <input id="CurrentCredit" name="CurrentCredit" type="hidden" value="" zyf-hide-current-credit="0" />
+                    <span class="field-validation-valid" data-valmsg-for="Reward" data-valmsg-replace="true"></span>
+                </div>
+                <div class="submit">
+                    <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once zyf-exclude-draft />
+                    <input type="reset" class="btn btn-default" />
+                </div>
+            </form>
+            <div class="modal fade" tabindex="-1" role="dialog" zyf-need-remote-help-modal id="contact">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title"><span class="glyphicon glyphicon-question-sign descend-3px"></span> 是否需要远程协助</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                “一起帮”提倡通过远程协助，“一对一”的解决开发/电脑使用等方面的具体问题。请确认你的求助是否需要远程协助：
+                            </p>
+                            <p class="radio">
+                                <label>
+                                    <input type="radio" name="needRemoteHelpInModal" checked zyf-need-remote-help-in-modal /> 需要。使用清晰简洁的问题描述即可，具体细节可在远程协助中说明。
+                                </label>
+                            </p>
+                            <p class="radio">
+                                <label>
+                                    <input type="radio" name="needRemoteHelpInModal" />不需要。请务必详细的、有条理、最好是图文并茂的说明相关问题。
+                                </label>
+                            </p>
+                            <hr />
+                            <p class="checkbox">
+                                <label>
+                                    <input type="checkbox" zyf-remember-in-needremotehelp-modal /> 不再提示。（该选项还可以在发布求助前更改）
+                                </label>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
+
+
+        </div>
+        <div class="col-md-3" style="margin-top: 40px;">
+
+            <a href="/Profile/Write?prepage=%2fProblem%2fNew" class="btn pull-right hide" zyf-profile-edit>
+                <span class="glyphicon glyphicon-edit descend-2px"></span>
+                <span>修改</span>
+            </a>
+            <div class="img-responsive img-thumbnail" id="profile-no-picture">
+                <span class="glyphicon glyphicon-camera descend-2px" id="camera"></span>
+                <div id="wait">
+                    等待上传中<span class="glyphicon glyphicon-hourglass descend-2px"></span>...
+                </div>
+            </div>
+            <div class="user-show">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>用户：</label>
+                        <a href="/User/1247" zyf-show-contact="1247">songboriceboy</a>
+
+                    </div>
+                    <input type="hidden" value="1247" zyf-profile-user-id />
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>性别：</label>
+                        男
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>生日：</label>
+                        2001 <span>年</span>
+                    </div>
+                </div>
+                <div>
+                    <label>关注：</label>
+                    <p>
+                        <span title="被使用过 28 次" data-toggle="tooltip" class="badge">编程开发语言</span>
+                        <span title="被使用过 5 次" data-toggle="tooltip" class="badge">Python</span>
+                        <span title="被使用过 0 次" data-toggle="tooltip" class="badge">谁说的</span>
+                    </p>
+                </div>
+                <div><label>自我介绍：</label></div>
+                <p style="word-break:break-all;">
+                    点点滴滴
+                </p>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fProblem%2fNew">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

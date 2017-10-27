@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>新人测试·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("form").submit(function () {
+                var questions = {};
+                $(this).find(":radio,:checkbox").each(function () {
+                    questions[this.name] = true;
+                })
+                for (group in questions) {
+                    hasChecked = !!$(":radio[name='" + group + "']:checked, :checkbox[name='" + group + "']:checked").length;
+                    if (!hasChecked) {
+                        showRemind('<span class="glyphicon glyphicon-warning-sign" style="color:yellowgreen;"></span> 还有题目没有选择答案（如第' + group + '题）。');
+                        $(":radio[name='" + group + "']:not(:checked), :checkbox[name='" + group + "']:not(:checked)").parentsUntil("div").addClass("yellow-highlight")
+                        return false;
+                    }
+                }
+            })
+
+        })
+    </script>
+
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fNewbie%2fExam"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-9">
+            <h2 class="page-header">
+
+                <span class="glyphicon glyphicon-education descend-4px" aria-hidden="true"></span> 新人测试
+
+            </h2>
+
+            <form action="/Newbie/Exam" method="post">        <label>1 、“一起帮”是一个：</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="1" value="1"   />
+                        互联网帮派组织
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="1" value="2"   />
+                        野外求生救援组织
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="1" value="3"   />
+                        学习各种电脑软件/编程技术的互助组织
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="1" value="4"   />
+                        疾病/天灾/意外等事故的众筹机构
+                    </label>
+                </div>
+                <label>2 、“一起帮”倡导的帮助形式为：</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="2" value="5"   />
+                        同城线下互助
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="2" value="6"   />
+                        “一对一”的、通过远程桌面共享等技术，直接的解决具体问题
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="2" value="7"   />
+                        清晰条理的书面形式
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="2" value="8"   />
+                        录音录像等多媒体方式
+                    </label>
+                </div>
+                <label>3 、“你帮我，我帮你，大家‘一起帮’ ”。为了调动大家的积极性，“一起帮”引入了类似于积分的虚拟货币，用于求助人在获得帮助之后“酬谢”好心人。这种虚拟货币被称为：</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="3" value="9"   />
+                        时间币
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="3" value="10"   />
+                        打赏币
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="3" value="11"   />
+                        Q币
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="3" value="12"   />
+                        比特币
+                    </label>
+                </div>
+                <label>4 、获取时间币的途径有：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="4" value="13"   />
+                        由系统自动赠送。如：邀请同学朋友等注册、激活Email、完成“新手村”任务……
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="4" value="14"   />
+                        帮助其他求助人解决问题，获得求助人的酬谢。
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="4" value="15"   />
+                        参与各种活动，由打赏币转换为时间币。如：（被）文章的赞和踩、求助总结的（被）感谢……
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="4" value="16"   />
+                        系统管理员赠送。如提出合理化建议被采纳、文章评论被设置为“精选”……
+                    </label>
+                </div>
+                <label>5 、容易和“时间币”混淆的，还有“打赏币”。以下关于打赏币的描述，正确的是：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="5" value="17"   />
+                        打赏币在登录时由系统分配，数额是随机的
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="5" value="18"   />
+                        未使用的打赏币会在获得后24小时自动清零
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="5" value="19"   />
+                        打赏币可自动转换为时间币
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="5" value="20"   />
+                        没有打赏币就不能点赞和踩了
+                    </label>
+                </div>
+                <label>6 、以下哪些事项可以帮助你更快更好的获得帮助？</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="6" value="21"   />
+                        简明扼要的标题和描述，以及能反映问题的图片
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="6" value="22"   />
+                        使用准确的、大众的关键字
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="6" value="23"   />
+                        主动@相关领域的大牛专家
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="6" value="24"   />
+                        填写好联系方式，以便其他人能够及时联系上你
+                    </label>
+                </div>
+                <label>7 、联系方式中有一个Email选项，非常重要，关于它的说法，正确的是：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="7" value="25"   />
+                        需要激活之后才能接收到用户消息
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="7" value="26"   />
+                        激活之后就会获得时间币奖励
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="7" value="27"   />
+                        忘记密码的时候，重置密码的链接将发送到该邮箱
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="7" value="28"   />
+                        一经设定，不能修改
+                    </label>
+                </div>
+                <label>8 、上题提到了“用户消息”。相对于“系统通知”，“用户消息”是发送给特定用户的具有特定内容的消息。所以，以下属于“用户消息”的是：</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="8" value="29"   />
+                        你的求助有了新的应答
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="8" value="30"   />
+                        社区将于2017年10月1日举行“时间币大赠送”活动
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="8" value="31"   />
+                        你的建议被管理员奖励时间币10分钟
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="8" value="32"   />
+                        叶飞给你留言：“麻麻喊你回家吃饭”
+                    </label>
+                </div>
+                <label>9 、“一起帮”倡导的是：“一对一”远程直接协助，那么解决问题的过程只能是求助人和好心人才知道，怎么将这个过程中的收获分享给更多人呢？</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="9" value="33"   />
+                        把相关的参考资料链接等copy到求助说明或应答中
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="9" value="34"   />
+                        将“解题”过程录制下来，上传到“一起帮”
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="9" value="35"   />
+                        在求助的应答中详细写明问题解决的思路和过程等
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="9" value="36"   />
+                        问题解决（撤销/酬谢）后，在求助的“总结”中写明问题解决的过程和背后的原理
+                    </label>
+                </div>
+                <label>10 、以下关于“一起帮”的说法，正确的是：</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="10" value="37"   />
+                        “一起帮”开创了一种崭新的商业模式，具有清晰的盈利模式和良好的发展前景
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="10" value="38"   />
+                        已经获得500万A论融资
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="10" value="39"   />
+                        计划用5年的时间在纳斯达克成功上市
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="10" value="40"   />
+                        “一起帮”只想安安静静地做一点儿力所能及的事，一点儿美好的、温暖的、有意思的事。
+                    </label>
+                </div>
+                <div class="submit">
+                    <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                    <input type="reset" class="btn btn-default" value="重填" />
+                </div>
+            </form>
+
+
+        </div>
+        <div class="col-md-3" style="margin-top: 40px;">
+
+            <a href="/Profile/Write?prepage=%2fNewbie%2fExam" class="btn pull-right hide" zyf-profile-edit>
+                <span class="glyphicon glyphicon-edit descend-2px"></span>
+                <span>修改</span>
+            </a>
+            <div class="img-responsive img-thumbnail" id="profile-no-picture">
+                <span class="glyphicon glyphicon-camera descend-2px" id="camera"></span>
+                <div id="wait">
+                    等待上传中<span class="glyphicon glyphicon-hourglass descend-2px"></span>...
+                </div>
+            </div>
+            <div class="user-show">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>用户：</label>
+                        <a href="/User/1247" zyf-show-contact="1247">songboriceboy</a>
+
+                    </div>
+                    <input type="hidden" value="1247" zyf-profile-user-id />
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>性别：</label>
+                        男
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>生日：</label>
+                        2001 <span>年</span>
+                    </div>
+                </div>
+                <div>
+                    <label>关注：</label>
+                    <p>
+                        <span title="被使用过 28 次" data-toggle="tooltip" class="badge">编程开发语言</span>
+                        <span title="被使用过 5 次" data-toggle="tooltip" class="badge">Python</span>
+                        <span title="被使用过 0 次" data-toggle="tooltip" class="badge">谁说的</span>
+                    </p>
+                </div>
+                <div><label>自我介绍：</label></div>
+                <p style="word-break:break-all;">
+                    点点滴滴
+                </p>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fNewbie%2fExam">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+</body>
+</html>

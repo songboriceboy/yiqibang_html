@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>入坑IT十年（二）技术以外·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?0aabc7924d81455d6e9e9791aae3b427";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            //显示精选评论数量
+            $("[zyf-comment-of-article-count]").text(
+                $("[zyf-comment-of-article]").find("[data-has-handpicked=True]").length);
+
+            //只有管理员才能设置精选评论（TODO:以后要改成文章作者)
+            if (isAdmin()) {
+                $("[zyf-comment-of-article-handpick]").removeClass("hide");
+            }
+
+            //精选评论
+            $("[zyf-comment-of-article-handpick]").click(function (event) {
+                event.preventDefault();
+                var $this = $(this);
+                $this.hide();
+                $.ajax({
+                    url: $this.attr("href"),
+                    method: "GET",
+                    cache: false,
+                    success: function (data) {
+                        //TODO: data 暂时没作用
+                        showRemind('<span class="glyphicon glyphicon-ok text-success"></span> 该评论已被设置为精选。');
+                        $this.before('<small class="text-success"><span class="glyphicon glyphicon-ok"></span> 精选</small>');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        JqueryAjaxError(jqXHR, textStatus, errorThrown);
+                        $this.show();
+                    }
+                });
+            })
+        })
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fArticle%2f11"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">
+
+                <span class="text-primary"><span class="glyphicon glyphicon-list-alt descend-4px"></span> 入坑IT十年（二）技术以外</span>
+
+                <small style="" class="visible-xs-inline visible-sm-inline">
+                    <a zyf-show-widget>
+
+                    </a>
+                </small>
+            </h2>
+
+            <span class="visible-xs-inline visible-sm-inline clearfix">
+    <a zyf-show-widget class="pull-right" style="margin-right:14px; position:relative; top:-10px;">
+        <span class="glyphicon glyphicon-fullscreen descend-2px"></span> 更多
+    </a>
+</span>
+            <div>
+                <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 18点12分</small>
+
+                <span class="pull-right">
+        <span class="glyphicon glyphicon-user"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+
+        <a href="/Article/Edit/11" class="hide" style="margin-left:14px;" zyf-article-edit><span class="glyphicon glyphicon-edit descend-2px"></span> 修改</a>
+    </span>
+                <div style="clear:both; word-break:break-all; padding-top:20px;">
+                    <p>
+                        上一篇博客里提到：技术越来越简单，发布后不久，就看到《<a rel="nofollow" href="http://www.cnblogs.com/ztfjs/p/7596617.html">技术并不是越来越简单</a>》，这显然是打擂台来了。
+                    </p>
+                    <p>
+                        技术究竟是不是越来越简单？其实这个问题，要看你<strong>究竟是以什么角度来思考这个问题</strong>。我们可以举很多例子，比如：
+                    </p>
+                    <p>
+                        生火，是不是越来越简单？
+                    </p>
+                    <ul>
+                        <li>
+                            你可以说：是的，以前得钻木取火，太特么难了（贝爷除外）！现在打火机“啪”的一声，瞬间搞定，好简单。
+                        </li>
+                        <li>
+                            但你也可以说：哪里哟！打火机要复杂得多，好不好？塑料外壳、液化气、喷嘴、打火石……任何一个零部件的制作都是现代工艺智慧的结晶，更别说要丝丝入扣，燃气一喷出来就瞬间打燃，而且火焰既不能太大也不能太小……任何一个技术细节，都不能小觑！
+                        </li>
+                    </ul>
+                    <p>
+                        你觉得那种说法更有道理？
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        我希望大家能多思考一下这个问题。至少，能带着这个问题读完这篇博客。
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        看园子里的一些博客，尤其是我博客下面的一些评论，我常常有一种“鸡同鸭讲”的感觉。有时候我就会想：和他们相比，我确实不是一个“纯粹的”程序员。用一句话来概括我和他们的区别：<strong>我把技术当做一种工具，他们把技术当做一种信仰</strong>。
+                    </p>
+                    <p>
+                        所以，有时候，我还是有些犹豫：把我这些庸俗的、功利的、赤果果的言论，当街扔出来，究竟好还是不好？毕竟，信仰这东西，是闪着光的。
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        终于有这么一个机会，我也不评价别人，就说说自个儿，入坑IT这十年，技术之外的一些想法。
+                    </p>
+                    <p>
+                        去年夏天，我35岁，被HP裁员给裁了，摆在我面前的就三条路。
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        一、<strong>转行</strong>。回头做律师，搞装修，呵呵，这些我肯定不考虑了。我多说几句，是为了有一些正想着“贴膜”“开面馆”的同学：<strong>慎重，三思而行</strong>！如果确实是做程序员，一天到晚对着电脑，需求bug之类的脑壳痛，认准了自己确实不是做程序员的料，那没有什么问题；但如果仅仅是为了收入为了钱，我只能以过来人的身份，说几句话：
+                    </p>
+                    <p>
+                        隔行如隔山，转行穷三年。不是说不能动，但要做好思想准备。
+                    </p>
+                    <p>
+                        另外，门槛越低的行业，收入越是可怜。不要看到别人做淘宝一年几十万，那是做得好的，做得不好的你看不见。相比较而已，“程序员”的门槛，虽然越来越低，但还算将就。虽然号称“培训三个月，月薪8K”，但你懂的，(＾＿－)
+                    </p>
+                    <p>
+                        我做装修，亏了两年。除去我不懂管理这一块，最主要的原因还是我不懂家装这个行业。硬生生的缴了两年的学费，所以说“做熟不做生”，外行看热闹，里面的水深水浅，你不自己扎进去，你是摸不清楚的。我的感觉，随便哪个行业，水都深得很啊！/(ㄒoㄒ)/~~
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        二、<strong>打工</strong>。只有在确实没有办法的情况下，我才会继续找工作打工。
+                    </p>
+                    <p>
+                        基本上，到我这个年龄，还到处投简历的话，就太掉价了。而且市面上也不会有太多十年以上工作经验的职位，这些职位一般要靠“人脉”内推，或者猎头洽谈。公司选你，你选公司，大家都很谨慎，方方面面都要考虑。
+                    </p>
+                    <p>
+                        我这十年，一门心思都扎到技术上了，人脉上非常单薄。人际关系，是要经营的；而经营，是要花时间花精力的；而每个人的时间都是有限的，花在了技术上，就不可能花在钻营上。这也是个挺无奈的事情，但总体来说：职业生涯前期，花时间在技术上，更划算一些；中后期，投资人脉，收益应该更高一些。
+                    </p>
+                    <p>
+                        此外，我一直在大公司，而且是一个比一个大的巨无霸企业。以前我写过《<a rel="nofollow" href="http://www.cnblogs.com/freeflying/p/4599658.html">毁人不倦 - 大公司小公司</a>》，大公司里面，始终是螺丝钉，做不出业绩，或者做出来的业绩别人看不到。比如我去面试，你在HP干嘛呀？我负责维护XXX系统中，通过windows平台，使用Biztalk，进行“消息分发”的那一部分的紧急事件处理……首先，人家压根不知道XXX系统是个什么鬼；其次，用到的技术非常单一，限死了Biztalk；最后，你还只是做“紧急事件处理”。要是想靠工作上这点技术，另外谋个差事，非常困难。当然，你可能说我层级太低，要死“架构师”的话……我们那个系统啊，我就没见过架构师，稀里糊涂的干了5年，系统究竟是怎么一回事，其实还是晕乎乎——里面的问题一堆一堆的，大家都是在“拖”，老牛拖破车一样一步一步的“捱”。能够统揽全局的架构师，估计早就没在公司了。
+                    </p>
+                    <p>
+                        所以，你很难和人家讲你在公司有什么什么业绩的。
+                    </p>
+                    <p>
+                        说道这里，我特别想和大家讲一个故事：
+                    </p>
+                    <p>
+                        我转行IT后待的第4的一家公司，在上海，是一个外包公司。发包方美国那边，所有业务都往中国迁，整个部门整个部门的裁，一层楼一层楼的空，但有一个家伙，谁都不敢动他，他闹辞职好久了，闹一次加一次薪。他技术牛逼吗？很一般。我们做的企业管理系统，无非就是增删改查而已，本身就没什么技术含量——然而，然而，业务逻辑超级复杂！我以前讲过，我整一个bug差不多干了一个月，就是在那迷宫一样的代码里转来转去转来转去。整整，不是，超过十年的代码啊，从c到C#，包含c++，VB，Java，数不清的if...else...，你技术再牛逼不熟悉业务都没辙。
+                    </p>
+                    <p>
+                        这家伙，是公司仅存的一个从项目一开始就参与，一直跟着项目干了十年的老程序员。所以，这个文档残缺bug不断、业务超级复杂的系统，唯一的依靠就是这家伙了。当他在一些谁都不知道的旮旮旯旯，把兴风作浪的bug给拎出来的时候，所有人都只有一个大写的服。
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        <strong>三、创业</strong>。这是我最想最想说的，但这个问题太大太大了，篇幅所限，我还是以我自己为例子，简单的说一点。
+                    </p>
+                    <p>
+                        因为“<a  target="_blank">一起帮</a>”（链接已含邀请码）的开发做了直播，我有两个QQ群，群里我让大家帮我想点法子做点推广搞点流量，然后大家给我的建议大概就是：搞个手机APP，加一个推送功能，时间币要能兑换人民币啊……
+                    </p>
+                    <p>
+                        大家发现了问题没有？我让大家帮我想法子“做推广”，但大家的建议都是“加功能”。
+                    </p>
+                    <p>
+                        开始我以为是沟通的问题，但反复几次之后，我发现，这是思维模式的问题。有一句话叫做“手里有了锤子，看什么都像钉子”。因为QQ群里都是程序员或者准程序员，他们能做的就是写代码，所以他们解决问题的办法就是“加功能”——这简直就成了一种本能，他们理所当然的认为：只要功能够好，一定可以吸引用户……
+                    </p>
+                    <p>
+                        但真的是这样吗？肯定不是啊！“<a  target="_blank">一起帮</a>”要活起来，最根本的是什么？是“人气”。基本的功能实现之后，人气才是“<a  target="_blank">一起帮</a>”成败的关键：有人气，求助才能快速的得到解决；没人气，你做再多再好的功能也没用。博客园有什么独一无二的功能，csdn新增了这么多功能有什么卵用？（多说一句，很多本来很不错的网站/软件/APP，不断的堆砌新功能，最后让人迷茫烦燥，你们有没有这种感觉？）
+                    </p>
+                    <p>
+                        程序员创业，“懂技术”是最大的优势，再也不用可怜兮兮的“我只差一个程序员了”；但“懂技术”，也可能是我们创业中最大的陷阱。因为我们相信“技术可以解决一切问题”，或者经意不经意的轻视创业过程中的其他因素。
+                    </p>
+                    <p>
+                        其实我弄技术一直弄了十年，就已经犯了这个错误。回头想来，五年前（甚至更早），我就应该拉起人马自己先干起来。没干起来的原因很多，但觉得自己技术还不够强也是一方面。但技术嘛，够用就行，何必一直拖到现在？我网上看一些网站站长，请人帮忙搭个Discuz之类的论坛，技术勉勉强强能做点维护，还不是一样把钱赚了？盆满钵满。
+                    </p>
+                    <p>
+                        说到推广，我又得提一遍《<a rel="nofollow" href="http://www.cnblogs.com/freeflying/p/4599658.html">毁人不倦 - 大公司小公司</a>》，这些年一直待在大公司，没去小（创业）公司见识见识，说不上后悔，但至少有些遗憾。现在很多东西都一头雾水，连怎么下手都不知道。所以，大公司好还是不好，要具体到个人，要具体到你的职业目标——这和我在《架构之路》里首先要定义“架构好不好”里面的“好”一样的道理。如果什么事都可以“一刀切”的话，那这世界就没有什么“多元化”了。
+                    </p>
+                    <p>
+                        我的建议：如果以后有创业的打算，最好还是去创业公司待上一两年。多听多想多看多干，少抱怨。我年轻的时候打工，总觉得老板这也不行那也不行，其实呢，发现问题没什么了不起，只要眼睛不瞎都看得见。牢骚显摆不聪明，聪明的人，会琢磨为什么公司这么多问题还能经营，会琢磨要是我是老板能不能解决这些问题，会琢磨我怎么因势利导最大化我的利益……想想这些其实是废话，这种聪明是天生的，懂的人不教都会，不懂的人怎么教都教不会。
+                    </p>
+                    <p>
+                        至于大公司里怎么学东西，呵呵，我真没什么可说的。任何机构，只要大到一定程度，必然官僚臃肿拖沓各种毛病，给我这种人偷奸耍滑混日子的机会，呵呵。我也从来没指望在里面往上爬（话说，那些使劲往上爬的，也没几个爬上去了的），要想升职加薪，还不如想办法跳槽。
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        也差不多了，回头看看，写得好像有点乱。但总体来说，主旨就一个：<strong>技术不是全部</strong>。这观点确实有点庸俗，但我们大多数人也都是俗人，所以我厚着脸皮把这话说出来。
+                    </p>
+                    <p>
+                        有些同学肯定要问：那么，除了提高技术以外，还应该做些什么？
+                    </p>
+                    <p>
+                        我知道大家都喜欢“一二三”之类的列举，园子里也有这样的文章。但实际上，这些东西，都因人而宜。彼之蜜糖，此之砒霜，邯郸学步，止增笑耳。<strong>最关键的，是思路的转变</strong>。思路的转变，是很难的，你会下意识的抗拒，因为技术是你的“舒适区”，要走出舒适区，那日子不好过啊……
+                    </p>
+                    <p>
+                        &nbsp;
+                    </p>
+                    <p>
+                        好了好了，不说了，我也要走出“舒适区”，去做特么的无聊的推广了，/(ㄒoㄒ)/~~
+                    </p>
+                </div>
+                <div class="clearfix" style="padding-top:10px;">
+                    <div>
+                        <label><span class="glyphicon glyphicon-tags descend-2px"></span>  关键字：</label>
+                        <span class="badge">编程</span>
+                        <span class="badge">开发</span>
+                        <span class="badge">程序员</span>
+                        <span class="badge">十年</span>
+                        <span class="badge">感悟</span>
+                        <span class="badge">技术</span>
+                    </div>
+                    <div class="article-appraise appraise-status pull-right">
+                        <a class="appraise-status-item text-success" href="/Article/Appraise?id=11&direction=1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">支持：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+                        <a class="appraise-status-item text-muted" href="/Article/Appraise?id=11&direction=-1" zyf-free-appraise>
+                            <span class="glyphicon glyphicon-thumbs-down"></span>
+                            <span class="visible-sm-inline visible-md-inline visible-lg-inline">反对：</span>
+                            <span zyf-appraise-count>0</span>
+                        </a>
+
+                    </div>
+                    <div style="clear:both;">
+                        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+                    </div>
+                </div>
+                <div class="yellow-highlight" style="padding:5px 10px; margin-top:20px;">
+                    <a title="这是什么？" style="color:#354756" data-toggle="tooltip" href="/FAQ/Ad#article">投稿人推广：</a> <a href="http://17bang.zyfei.net/Article/8" target="_blank">一次尝试：真正的项目实战培训</a>
+                </div>
+                <a name="new-comment"></a>
+                <div style="padding-top:20px;">
+
+                    <div zyf-not-logon class="hide" style="border:2px dashed #eee; border-radius:4px 6px; padding: 10px 20px; clear:both;">
+                        <span class="glyphicon glyphicon-warning-sign" style="color:yellowgreen;"></span>
+                        您还没有登录，不能发布评论。请<a href="/Log/On?prepage=%2fArticle%2f11">登陆</a>或<a href="/Register/Home?prepage=%2fArticle%2f11">注册</a>。
+                    </div>
+                    <div zyf-logon class="hide">
+                        <h4>
+                            <span class="glyphicon glyphicon-send descend-2px"></span> <label>我有话说：</label>
+                            <span>
+                    <div class="pull-right">
+    <small class="text-info" zyf-kindeditor-remind></small>
+
+    <a class="btn btn-xs btn-primary" style="margin-right:5px" zyf-toggle-kindeditor>
+        <span class="glyphicon glyphicon-refresh descend-2px"></span>切换
+    </a>
+</div>
+                </span>
+                        </h4>
+
+                        <script src="/Scripts/kindeditor-v4.1/kindeditor.js"></script>
+                        <script src="/Scripts/kindeditor-v4.1/lang/zh_CN.js"></script>
+                        <script src="/Scripts/kindeditor.help.js"></script>
+                        <script>
+                            $(document).ready(function () {
+                                var validator = $('form').data("validator");
+                                if (validator !== undefined) {
+                                    //Note: 验证“隐藏”的控件
+                                    validator.settings.ignore = "";
+                                }
+                            })
+                        </script>
+                        <form action="/Article/11" data-ajax="true" data-ajax-begin="hideButton" data-ajax-complete="showButton" data-ajax-failure="showAjaxError" data-ajax-method="Post" data-ajax-mode="before" data-ajax-success="congratulate" data-ajax-update="#published_comment" id="form0" method="post">    <div zyf-problem-comment-reply-reminder></div>
+                            <input data-val="true" data-val-number="字段 ReplyId 必须是一个数字。" id="CommentBody_ReplyId" name="CommentBody.ReplyId" type="hidden" value="" zyf-problem-comment-reply-id="" /><span class="field-validation-valid" data-valmsg-for="CommentBody.ReplyId" data-valmsg-replace="true"></span>    <div class="form-group">
+        <textarea class="form-control" cols="20" data-val="true" data-val-required="* 正文不能为空" id="CommentBody_Content" name="CommentBody.Content" placeholder="精选评论有时间币奖励哟！O(∩_∩)O~" rows="4" zyf-kindeditor="" zyf-new-comment="">
+</textarea>
+                                <input data-val="true" data-val-required="IsRichHtml 字段是必需的。" id="CommentBody_IsRichHtml" name="CommentBody.IsRichHtml" type="hidden" value="" zyf-isRichHtml="" />
+                                <span class="field-validation-valid" data-valmsg-for="CommentBody.Content" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="submit">
+                                <input type="submit" id="submit" class="btn btn-primary loading" value="提交" />
+                                <input type="reset" class="btn btn-default" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div style="clear:both; margin: 15px 0;">
+                    <div style="margin-top:20px; padding:10px 15px; border: 2px dashed #808080; border-radius:4px 5px;">
+                        <div>
+                            <span class="glyphicon glyphicon-arrow-up descend-2px"></span>
+                            上一篇：
+                            <a href="/Article/10" target="_blank">入坑IT都快十年了</a>
+
+                        </div>
+                        <div style="margin-top:6px;">
+                            <span class="glyphicon glyphicon-arrow-down descend-2px"></span>
+                            下一篇：
+                            <span class="text-info">已经是最后一篇了……</span>
+
+                        </div>
+                    </div>
+                </div>
+                <a name="comments"></a>
+                <div class="appraise-status" style="clear:both; margin-top: 15px;">
+        <span class="lead" style="margin-right:20px">
+            <span class="glyphicon glyphicon-comment descend-2px"></span>
+            <span class="visible-sm-inline visible-md-inline visible-lg-inline">评论</span><small>
+                （ <span zyf-comment-of-article-count title="精选评论" data-toggle="tooltip"></span> / <span title="全部评论" data-toggle="tooltip">0</span> ）
+            </small>
+        </span>
+                </div>
+                <div zyf-comment-of-article>
+                    <div id="published_comment"></div>
+
+                </div>
+            </div>
+
+        </div>
+        <div style="margin-top:55px" class="col-md-4 visible-md visible-lg">
+
+            <div zyf-widget-content  class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-tags descend-4px"></span> 关键字</div>
+                <hr />
+                <div zyf-keyword-widget-content></div>
+                <a href="" class="btn btn-default pull-right" zyf-keyword-widget-another>
+                    <span class="glyphicon glyphicon-random descend-2px"></span>
+                    <span style="margin-left:5px;">换一批</span>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div class="ad-in-widget">
+
+                    <span class="item-1">1</span>
+                    <a href="http://nutzam.com" target="_blank">Nutz-Java程序员的另一个选择</a>
+                </div>
+                <a href="/AdInWidget/Write" target="_blank" class="pull-right text-muted">
+                    <small zyf-ad-in-widget-remind>
+                        <span class="glyphicon glyphicon-tint descend-2px"></span> 广告
+                        <span zyf-ad-in-widget-remind-suffix class="hide">，你也可以发布哟！</span>
+                    </small>
+                </a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-bell descend-4px"></span> 即时消息</div>
+                <hr />
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点31分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/829" zyf-show-contact="829">码农一号</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/169" target="_blank">android RecyclerView数据源刷新...</a>有<a href="http://17bang.ren/User/1376" target="_blank">vite</a>的新应答：<span class="text-muted">抢： 我可以试试……</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点39分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1175" zyf-show-contact="1175">dybai</a>
+                    </small>
+                    <p style="clear:both;">文章的评论<a href="http://17bang.ren/Article/7" target="_blank">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</a>被标识为<span class="text-success"> <span class="glyphicon glyphicon-flag"></span> 精选</span>，获得 <span class="glyphicon glyphicon-time credit"></span> <a href="http://17bang.ren/FAQ/Credit" target="_blank">时间币</a> 奖励10分钟</p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 16点38分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1" zyf-show-contact="1">叶飞</a>
+                    </small>
+                    <p style="clear:both;">文章<a href="http://17bang.ren/Article/7" target="_blank">十年之后再看“面向对象”</a>有<a href="http://17bang.ren/User/1175" target="_blank">dybai</a>的新应答：<span class="text-muted">作为一个（自以为是）老码农的我看到这篇文章有一种酣...</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 15点09分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/883" zyf-show-contact="883">韩慎之</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/141" target="_blank">三个小问题 直接图示。git bash 如图这样子...</a>有<a href="http://17bang.ren/User/1360" target="_blank">zakeyken</a>的新应答：<span class="text-muted">看不到图片，不知道什么情况</span></p>
+                </div>
+                <div>
+            <span class="pull-left" style="margin-right:24px;"><small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 14点51分</small>
+</span>
+                    <small class="pull-left"><span class="glyphicon glyphicon-send" data-toggle="tooltip" title="发送给"></span> <a href="/User/1084" zyf-show-contact="1084">toone888</a>
+                    </small>
+                    <p style="clear:both;">求助<a href="http://17bang.ren/Problem/170" target="_blank">vs2010怎么打开vs2013项目（vs2012...</a>有<a href="http://17bang.ren/User/1" target="_blank">叶飞</a>的新应答：<span class="text-muted">10分钟时间币，是不是太少了点~~~~~</span></p>
+                </div>
+                <a href="/Message/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 全部消息</a>
+            </div>
+
+            <div zyf-widget-content class="widget clearfix">
+                <div style="font-size:24px;"><span class="glyphicon glyphicon-user descend-2px"></span> 新注册用户</div>
+                <hr />
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点19分</small>
+
+                    <div>
+                        <a href="/User/1379" zyf-show-contact="1379">wp90925</a>
+
+                        <span>男，</span>
+                        <span>1999年6月双子座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月14日 09点14分</small>
+
+                    <div>
+                        <a href="/User/1378" zyf-show-contact="1378">青云</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 21点41分</small>
+
+                    <div>
+                        <a href="/User/1377" zyf-show-contact="1377">sjt157</a>
+
+                        <span>男，</span>
+                        <span>1994年4月金牛座</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点53分</small>
+
+                    <div>
+                        <a href="/User/1376" zyf-show-contact="1376">vite</a>
+
+                        <span></span>
+                        <span></span>
+                        <div style="word-break:break-all;">
+                            <span class="glyphicon glyphicon-flag descend-2px text-info"></span>
+                            https://github.com/ViTess
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <small class="text-muted"><span class="glyphicon glyphicon-calendar"></span> 2017年10月13日 20点41分</small>
+
+                    <div>
+                        <a href="/User/1375" zyf-show-contact="1375">TEST-dk</a>
+
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <a href="/User/Index" class="btn pull-right"><span class="glyphicon glyphicon-hand-right"></span> 更多</a>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fArticle%2f11">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<style type="text/css">
+    h2 {
+        position: relative;
+    }
+
+    h2 > small {
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+    }
+
+    li {
+        margin-top: 5px;
+    }
+</style>
+
+
+</body>
+</html>

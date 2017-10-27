@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>系统通知·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            if (isAdmin()) {
+                $("[zyf-notice-edit]").removeClass("hide");
+            }
+        })
+    </script>
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fNotice"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fNotice"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fNotice"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fNotice"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fNotice"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fNotice"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fNotice"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <h2 class="page-header"><span class="glyphicon glyphicon-list-alt descend-4px"></span> 系统通知</h2>
+    <div>
+        <div class="row visible-sm visible-md visible-lg">
+            <div class="col-sm-1">状态</div>
+            <div class="col-sm-3">过期时间</div>
+            <div class="col-sm-8">内容</div>
+        </div>
+        <hr class="thin visible-sm visible-md visible-lg" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年08月23日</small> <br />
+                <span>过期：</span><small>2017年09月23日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=8" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>快来完善“我的关注”吧</b>
+                </p>
+                <p><p>好久没有发布新通知了。</p>
+                <p>但<a href="/">一起帮</a>的开发工作一直没有停滞哟！</p>
+                <p>这段时间最主要的一个功能就是：用户可以设置<a href="/Profile/Write" target="_blank">我的关注</a>关键字，可用于：</p>
+                <ul>
+                    <li>
+                        <a href="/">首页</a>一键筛选自己感兴趣的求助。
+                    </li>
+                    <li>
+                        别人<a href="">发布求助</a>时，能够通过关键字@你，定向求助。
+                    </li>
+                </ul>
+                <p>另外，为了方便一些“懒癌”患者，我们还贴心的退出了关注 <span class="text-primary">自动补足</span> 功能：当你的关注关键字少于10个时，系统会在你发布/应答求助时自动补充该求助的关键字——当然，这些都是可以由你自己<a href="/Profile/Write" target="_blank">手工修改</a>的。</p></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年07月03日</small> <br />
+                <span>过期：</span><small>2017年07月11日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=7" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>新人测试：送积分啦！</b>
+                </p>
+                <p>为了送点 <span class="glyphicon glyphicon-time credit descend-2px"></span> <a href="/FAQ/Credit#time" target="_blank">时间币</a>， 我们可是操碎了心啊！<br />
+                    来来来，做个<a href="/Newbie/Exam" target="_blank">新人测试</a>吧。<br />
+                    各凭本事了哟……<br />
+                    <span class="text-success">ヽ(￣▽￣)ﾉ</span></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年06月10日</small> <br />
+                <span>过期：</span><small>2017年07月01日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=6" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>新功能上线，及积分政策调整预告</b>
+                </p>
+                <p>                <span class="text-info"> (｡･∀･)ﾉﾞ</span><br />
+                    嗨！好久没来<a href="/">一起帮</a>了吧，首先向你汇报一下我们的项目进展吧！<br />
+                    <b>1、求助评价和总结</b><br />
+                    别人帮助了你，你进行酬谢的时候可以同时给予星级评价和文字留言，最好都是5星好评哟！<br />
+                    在求助问题解决（撤销/酬谢）之后，求助人和好心人还可以写总结，这样既可以整理思路巩固知识，也可以帮助其他人，是不是一举两得呢？<br />
+                    <b>2、文章功能上线</b><br />
+                    眼尖的你应该已经发现了：<a href="/Article">精品文章</a>上线了。现在里面只有我的文章，后期也会使用大家的投稿（如果你愿意发文分享你的学习经历，直接<a href="/Contact/Us">联系我</a>吧）。<br />
+                    另外，我们的<b>积分政策即将进行调整</b>。政策落地时间视开发进度而定，不再另行通知。<br />
+                    个人认为，较大的变动有：<br />
+                    1）停止简单的注册送积分，注册时获得积分需要有邀请码、验证Email等；<br />
+                    2）发布求助至少需要悬赏10分钟时间币；<br />
+                    3）鼓励各种形式的参与，如点赞、评论、发布总结等都有机会获得时间币奖励。具体怎么回事，多参与不就知道了？<br /></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年04月10日</small> <br />
+                <span>过期：</span><small>2017年06月12日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=2" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>邀请你的好友，加入我们！（有时间币奖励哟）</b>
+                </p>
+                <p>    <p>
+                快来看看你的 <a href="/Invite" target="_blank">邀请码和邀请链接</a> 吧！把它们发送给你的朋友，只要使用你的邀请码，每注册一个新用户，你就能获得10分钟的 <span class="glyphicon glyphicon-time credit"></span> <span class="text-primary">时间币</span> 奖励哟！
+            </p></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年04月26日</small> <br />
+                <span>过期：</span><small>2017年06月06日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=4" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>求各种建议啊！—— 意见建议板块上线</b>
+                </p>
+                <p><a href="/" target="_blank">一起帮</a>叫好不叫座：每天都有新注册用户，但已经连续十来天没有新发布的求助啦！究竟是怎么回事？<br />
+                    所以加急开通了<a href="/Suggest">意见建议</a>板块，特别想听听到大家的想法。<br />
+                    所有意见建议都会有 <span class="glyphicon glyphicon-time credit"></span> <span class="text-primary">时间币</span> 奉上，拜托了！<br />
+                    <img alt="拜托啦！" src="/Images/please.png" title="拜托了！" /></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年05月05日</small> <br />
+                <span>过期：</span><small>2017年06月05日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=5" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>O(∩_∩)O 个人主页开通啦！</b>
+                </p>
+                <p>现在填写<a href="/Profile/Write" target="_blank">个人资料</a>，就能开通<a href="/User/Single" target="_blank">个人主页</a>了哟！<br />
+                    注册送积分的活动已经到期，但我们还是为每个新用户奖励50分钟的<span class="glyphicon glyphicon-time credit"></span><span class="text-primary">时间币</span>。<br />
+                    已注册用户还可以通过<a href="/Invite" target="_blank">邀请注册</a>、<a href="/Suggest" target="_blank">意见建议</a>等获取更多的<span class="glyphicon glyphicon-time credit"></span> <span class="text-primary">时间币</span>。<br />
+                </p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年04月23日</small> <br />
+                <span>过期：</span><small>2017年05月23日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=3" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>Email功能开通</b>
+                </p>
+                <p>请大家到<a href="/Contact/Edit"><span class="glyphicon glyphicon-phone-alt"></span> 联系方式</a>页面输入自己的Email地址，等待系统发送确认邮件，激活Email后就可以通过Email收到<span class="text-primary">求助有了新回复</span>、<span class="text-primary">得到酬谢</span>、<span class="text-primary">别人当做邀请人注册</span>等信息。
+                    <br />
+                    另外，我们修复了系统通知反复显示的bug，麻烦大家留心观察核实一下，谢谢！</p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+        <div class="row">
+            <div class="col-xs-3 col-sm-1">
+
+                已过期
+            </div>
+            <div class="col-xs-9 col-sm-3">
+                <span>生效：</span><small>2017年04月10日</small> <br />
+                <span>过期：</span><small>2017年05月01日</small>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <p>
+                    <a href="/Notice/Edit?id=1" class="hide" style="margin-right:10px;" zyf-notice-edit>
+                        <span class="glyphicon glyphicon-edit" data-toggle="tooltip" title="修改"></span>
+                    </a>
+                    <b>注册就送时间币！</b>
+                </p>
+                <p><p>
+                现在<a href="/Register/Home" target="_blank">注册</a>，就可立即获得100分钟 <span class="glyphicon glyphicon-time credit"></span> <span class="text-primary">时间币</span>。截止时间：2017年5月1日，赶快<a href="/Register/Home" target="_blank">注册</a>吧！
+            </p></p>
+            </div>
+        </div>
+        <hr class="thin dashed" />
+    </div>
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fNotice">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+</body>
+</html>

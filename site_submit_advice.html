@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" />
+    <link rel="shortcut icon" type="image/ico" href="/Images/logo.ico" media="screen" />
+    <title>意见建议·一起帮</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/yiqibang_prev.css" rel="stylesheet">
+    <link href="css/yiqibangpost.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    <script src="/Scripts/kindeditor-v4.1/kindeditor.js"></script>
+    <script src="/Scripts/kindeditor-v4.1/lang/zh_CN.js"></script>
+    <script src="/Scripts/kindeditor.help.js"></script>
+    <script>
+        $(document).ready(function () {
+            var validator = $('form').data("validator");
+            if (validator !== undefined) {
+                //Note: 验证“隐藏”的控件
+                validator.settings.ignore = "";
+            }
+        })
+    </script>
+
+
+</head>
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a href="/" target="_blank">
+            <img src="/Images/logo.png" alt="一起帮Logo" data-toggle="tooltip" title="一起帮首页" class="pull-left" />
+        </a>
+        <p class="navbar-text pull-left">
+            <span style="font-size:18px; font-weight:600;">一 起 帮</span>
+            <span class="visible-md-inline visible-lg-inline"> · "一对一"远程互助平台</span>
+        </p>
+        <a href="/Message/Mine" target="_blank" class="navbar-text pull-left" style="font-size:18px; margin-left:10px;">
+            <span class="glyphicon glyphicon-bell descend-4px pull-left hide" zyf-bell></span>
+        </a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Problem/New" target="_blank"><span class="glyphicon glyphicon-question-sign"></span> 我要求助</a> </li>
+                <li><a href="/?excludeCanceled=true&excludeRewarded=true" target="_blank"><span class="glyphicon glyphicon-heart"></span> 我来帮忙</a></li>
+                <li><a href="/Article" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 精品文章</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-dashboard"></span> 后台<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><span class="glyphicon glyphicon-eye-open"></span> 我的</li>
+                        <li><a href="/User/Single" target="_blank"><span class="glyphicon glyphicon-home"></span> 主页</a></li>
+                        <li><a href="/Invite" target="_blank"><span class="glyphicon glyphicon-random descend-2px"></span> 邀请</a> </li>
+                        <li><a href="/Message/Mine" target="_blank"><span class="glyphicon glyphicon-bell descend-2px"></span> 消息</a> </li>
+                        <li><a href="/Draft" target="_blank"><span class="glyphicon glyphicon-list-alt"></span> 草稿</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">广告推广</li>
+                        <li><a href="/AdInContact/Write?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-link descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/AdInWidget/Write?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-link descend-2px"></span> 侧边栏</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">时间币</li>
+                        <li><a href="/Credit/Buy?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-import descend-2px"></span> 购买</a></li>
+                        <li><a href="/Credit/Recycle?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-export descend-2px"></span> 兑换</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Contact/Edit?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-phone-alt descend-2px"></span> 联系方式</a></li>
+                        <li><a href="/Profile/Write?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-camera descend-2px"></span> 个人资料</a></li>
+                        <li><a href="/Password/Change?prepage=%2fSuggest%2fNew"><span class="glyphicon glyphicon-lock descend-2px"></span> 修改密码</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/Newbie/Exam" target="_blank"><span class="glyphicon glyphicon-education"></span> 新人测试</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zyf-notice-daily></div>
+<div class="container body-content">
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">
+
+                <span class="glyphicon glyphicon-edit descend-4px" aria-hidden="true"></span> 意见建议
+
+                <small style="" class="visible-xs-inline visible-sm-inline">
+                    <a zyf-show-widget>
+
+                    </a>
+                </small>
+            </h2>
+
+            <form action="/Suggest/New" method="post">    <div class="form-group">
+                <label>标题：（* 必填）</label>
+                <input class="form-control" data-val="true" data-val-length="* 标题的长度不能大于255" data-val-length-max="255" data-val-required="* 标题不能为空" id="Title" name="Title" placeholder="简明勒要，不超过255字" type="text" value="" />
+                <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+            </div>
+                <div class="form-group">
+                    <label>描述：</label>
+                    <div class="pull-right">
+                        <small class="text-info" zyf-kindeditor-remind></small>
+
+                        <a class="btn btn-xs btn-primary" style="margin-right:5px" zyf-toggle-kindeditor>
+                            <span class="glyphicon glyphicon-refresh descend-2px"></span>切换
+                        </a>
+                    </div>
+                    <textarea class="form-control" cols="20" data-val="true" data-val-required="* 正文不能为空" id="Body_Content" name="Body.Content" placeholder="感谢你的建议……" rows="15" zyf-kindeditor="">
+</textarea>
+                    <input data-val="true" data-val-required="IsRichHtml 字段是必需的。" id="Body_IsRichHtml" name="Body.IsRichHtml" type="hidden" value="" zyf-isRichHtml="" />
+                    <span class="field-validation-valid" data-valmsg-for="Body.Content" data-valmsg-replace="true"></span>
+                </div>
+                <div class="submit">
+                    <input type="submit" class="btn btn-primary loading" value="提交" zyf-submit-once />
+                    <input type="reset" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+        <div style="margin-top:55px" class="col-md-4 visible-md visible-lg">
+
+            <div class="widget">
+                <h4 style="margin-bottom:20px;" class="text-bold">
+                    <span class="glyphicon glyphicon-road descend-4px"></span> 开发线路图
+                </h4>
+                <div zyf-widget-content>
+                    <p>
+                        <a data-toggle="collapse" href="#user"><span class="glyphicon glyphicon-unchecked"></span> 用户</a>
+                    </p>
+                    <div id="user" class="collapse roadmap-content text-muted">
+                        <p>修改密码</p>
+                        <p>根据积分设定/显示其等级</p>
+                    </div>
+                    <p>
+                        <a data-toggle="collapse" href="#article"><span class="glyphicon glyphicon-unchecked"></span> 投稿和展示</a>
+                    </p>
+                    <div id="article" class="collapse roadmap-content text-muted">
+                        <p>吸引其他大牛投稿</p>
+                        <p>投稿文章上给予推广展示等回馈</p>
+                    </div>
+                    <p>
+                        <a data-toggle="collapse" href="#reward"><span class="glyphicon glyphicon-unchecked"></span> 酬谢流程优化</a>
+                    </p>
+                    <div id="reward" class="collapse roadmap-content text-muted">
+                        <p>好心人因各种原因不支付酬谢时，已悬赏的时间币处理</p>
+                    </div>
+                    <p>
+                        <a data-toggle="collapse" href="#keyword"><span class="glyphicon glyphicon-unchecked"></span> 关键字组织检索</a>
+                    </p>
+                    <div id="keyword" class="collapse in roadmap-content text-muted">
+                        <p>应该能在后台管理关键字，比如添加层级组织、合并同类关键字等。</p>
+                        <p>然后，提供按关键字呈现/检索的功能。</p>
+                    </div>
+                    <p class="text-success">
+                        <a data-toggle="collapse" href="#email"><span class="glyphicon glyphicon-unchecked"></span> 消息订阅</a>
+                    </p>
+                    <div id="email" class="collapse roadmap-content text-muted">
+                        <p>用户可订阅/取消某一类型的消息</p>
+                    </div>
+                    <p class="text-success">
+                        <small>2017年6月19日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：用户间消息/打赏币功能，重构评价功能，调整时间币使用和系统奖励政策等
+                    </p>
+                    <p class="text-success">
+                        <small>2017年6月8日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：精品文章板块
+                    </p>
+                    <p class="text-success">
+                        <small>2017年6月2日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：星级评价/求助总结/注册流程重构等功能
+                    </p>
+                    <p class="text-success">
+                        <small>2017年5月1日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：邀请注册/Email通知/酬谢时评价/个人资料/个人主页等功能
+                    </p>
+                    <p class="text-success">
+                        <small>2017年4月9日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：邀请注册、系统通知的发布/推送功能，关于我们/常见问题/意见建议等说明页面
+                    </p>
+                    <p class="text-success">
+                        <small>2017年3月25日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> 新增：撤销/酬谢/用户消息/关键字/列表筛选等功能
+                    </p>
+                    <p class="text-success">
+                        <small>2017年3月14日</small><br />
+                        <span class="glyphicon glyphicon-check"></span> “乞丐版”发布：能够注册/登录/求助/回复
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <hr />
+    <footer>
+        <a href="/About/Us" target="_blank">关于我们</a> |
+        <a href="/FAQ" target="_blank">常见问题</a> |
+        <a href="/Suggest" target="_blank">意见建议</a> |
+        <a href="/Notice" target="_blank">历史通知</a>
+        <p class="pull-right">&copy; 2017 - 首顾科技</p>
+    </footer>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom " role="navigation">
+    <div class="container">
+        <div class="row" id="login-status">
+            <div class="dropup navbar-text pull-left ">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <span class="glyphicon glyphicon-piggy-bank descend-2px"></span> 账户信息 <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/FAQ/Credit#ballot" target="_blank">
+                            <span class="glyphicon glyphicon-usd descend-2px"></span> 打赏币：<span>1</span> 枚
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Credit" target="_blank">
+                            <span class="glyphicon glyphicon-time credit"></span> 时间币：<span zyf-nav-current-credit>0</span> 分钟
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropup navbar-text pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    <span class="glyphicon glyphicon-user descend-2px"></span>
+                    songboriceboy <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/Log/Off?prepage=%2fSuggest%2fNew">
+                            <span class="glyphicon glyphicon-log-out descend-2px"></span> 退出登陆
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="modal fade" tabindex="-1" role="dialog" zyf-global-modal id="contact">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <span zyf-global-modal-footer-placeholder></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<style type="text/css">
+    h2 {
+        position: relative;
+    }
+
+    h2 > small {
+        position: absolute;
+        right: 0px;
+        bottom: 10px;
+    }
+
+    li {
+        margin-top: 5px;
+    }
+</style>
+
+
+</body>
+</html>
